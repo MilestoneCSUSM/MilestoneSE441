@@ -1,0 +1,118 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateUserData {
+  onCreateUserData {
+    id
+    schoolname
+    email
+    birthday
+    grade
+  }
+}
+subscription OnUpdateUserData {
+  onUpdateUserData {
+    id
+    schoolname
+    email
+    birthday
+    grade
+  }
+}
+subscription OnDeleteUserData {
+  onDeleteUserData {
+    id
+    schoolname
+    email
+    birthday
+    grade
+  }
+}
+subscription OnCreateCourse {
+  onCreateCourse {
+    id
+    coursename
+    instructor
+    color
+    meetingdays
+    tasks {
+      id
+      coursename
+      title
+      duedate
+      percentage
+      priority
+      comments
+    }
+    author
+  }
+}
+subscription OnUpdateCourse {
+  onUpdateCourse {
+    id
+    coursename
+    instructor
+    color
+    meetingdays
+    tasks {
+      id
+      coursename
+      title
+      duedate
+      percentage
+      priority
+      comments
+    }
+    author
+  }
+}
+subscription OnDeleteCourse {
+  onDeleteCourse {
+    id
+    coursename
+    instructor
+    color
+    meetingdays
+    tasks {
+      id
+      coursename
+      title
+      duedate
+      percentage
+      priority
+      comments
+    }
+    author
+  }
+}
+subscription OnCreateTask {
+  onCreateTask {
+    id
+    coursename
+    title
+    duedate
+    percentage
+    priority
+    comments
+  }
+}
+subscription OnUpdateTask {
+  onUpdateTask {
+    id
+    coursename
+    title
+    duedate
+    percentage
+    priority
+    comments
+  }
+}
+subscription OnDeleteTask {
+  onDeleteTask {
+    id
+    coursename
+    title
+    duedate
+    percentage
+    priority
+    comments
+  }
+}

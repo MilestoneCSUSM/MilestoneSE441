@@ -1,0 +1,118 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateUserData($input: CreateUserDataInput!) {
+  createUserData(input: $input) {
+    id
+    schoolname
+    email
+    birthday
+    grade
+  }
+}
+mutation UpdateUserData($input: UpdateUserDataInput!) {
+  updateUserData(input: $input) {
+    id
+    schoolname
+    email
+    birthday
+    grade
+  }
+}
+mutation DeleteUserData($input: DeleteUserDataInput!) {
+  deleteUserData(input: $input) {
+    id
+    schoolname
+    email
+    birthday
+    grade
+  }
+}
+mutation CreateCourse($input: CreateCourseInput!) {
+  createCourse(input: $input) {
+    id
+    coursename
+    instructor
+    color
+    meetingdays
+    tasks {
+      id
+      coursename
+      title
+      duedate
+      percentage
+      priority
+      comments
+    }
+    author
+  }
+}
+mutation UpdateCourse($input: UpdateCourseInput!) {
+  updateCourse(input: $input) {
+    id
+    coursename
+    instructor
+    color
+    meetingdays
+    tasks {
+      id
+      coursename
+      title
+      duedate
+      percentage
+      priority
+      comments
+    }
+    author
+  }
+}
+mutation DeleteCourse($input: DeleteCourseInput!) {
+  deleteCourse(input: $input) {
+    id
+    coursename
+    instructor
+    color
+    meetingdays
+    tasks {
+      id
+      coursename
+      title
+      duedate
+      percentage
+      priority
+      comments
+    }
+    author
+  }
+}
+mutation CreateTask($input: CreateTaskInput!) {
+  createTask(input: $input) {
+    id
+    coursename
+    title
+    duedate
+    percentage
+    priority
+    comments
+  }
+}
+mutation UpdateTask($input: UpdateTaskInput!) {
+  updateTask(input: $input) {
+    id
+    coursename
+    title
+    duedate
+    percentage
+    priority
+    comments
+  }
+}
+mutation DeleteTask($input: DeleteTaskInput!) {
+  deleteTask(input: $input) {
+    id
+    coursename
+    title
+    duedate
+    percentage
+    priority
+    comments
+  }
+}

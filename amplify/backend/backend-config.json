@@ -1,0 +1,26 @@
+{
+	"auth": {
+		"milestonebab0bf9d": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	},
+	"api": {
+		"AmplifyAndroid": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [],
+					"defaultAuthentication": {
+						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
+						"userPoolConfig": {
+							"userPoolId": "authmilestonebab0bf9d"
+						}
+					}
+				}
+			}
+		}
+	}
+}

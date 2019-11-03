@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.milestone.CourseMenuActivity">
+
+    <TextView
+        android:id="@+id/coursemenutext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:text="Course Menu"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
+
+    <Button
+        android:id="@+id/addcoursebtn"
+        android:layout_width="329dp"
+        android:layout_height="41dp"
+        android:backgroundTint="#2196F3"
+        android:buttonTint="@color/colorPrimaryDark"
+        android:fontFamily="monospace"
+        android:text="Add Course"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.134" />
+
+    <Spinner
+        android:id="@+id/courseSpinner"
+        android:layout_width="329dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/editcoursebtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        app:layout_constraintVertical_bias="0.241" />
+
+    <Button
+        android:id="@+id/editcoursebtn"
+        android:layout_width="329dp"
+        android:layout_height="41dp"
+        android:backgroundTint="#2196F3"
+        android:buttonTint="@color/colorPrimaryDark"
+        android:fontFamily="monospace"
+        android:text="Edit an Existing Course"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.731" />
+
+    <Button
+        android:id="@+id/deletecoursebtn"
+        android:layout_width="329dp"
+        android:layout_height="41dp"
+        android:backgroundTint="#2196F3"
+        android:buttonTint="@color/colorPrimaryDark"
+        android:fontFamily="monospace"
+        android:text="Delete a Course"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editcoursebtn"
+        app:layout_constraintVertical_bias="0.201" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/editcoursebtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addcoursebtn"
+        app:layout_constraintVertical_bias="0.454" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

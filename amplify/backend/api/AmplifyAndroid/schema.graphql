@@ -1,0 +1,27 @@
+type UserData @model {
+  id: ID!
+  schoolname: String!
+  email:String!
+  birthday: String!
+  grade: Int!
+}
+
+type Course @model {
+  id: ID!
+  coursename: String!
+  instructor: String!
+  color: String!
+  meetingdays: String!
+  tasks: [Task!]
+  author: String!
+}
+
+type Task @model {
+  id: ID!
+  coursename: String!
+  title: String!
+  duedate: String!
+  percentage: Float
+  priority: Int
+  comments: String!
+}

@@ -1,0 +1,100 @@
+# this is an auto generated file. This will be overwritten
+query GetUserData($id: ID!) {
+  getUserData(id: $id) {
+    id
+    schoolname
+    email
+    birthday
+    grade
+  }
+}
+query ListUserDatas(
+  $filter: ModelUserDataFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUserDatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      schoolname
+      email
+      birthday
+      grade
+    }
+    nextToken
+  }
+}
+query GetCourse($id: ID!) {
+  getCourse(id: $id) {
+    id
+    coursename
+    instructor
+    color
+    meetingdays
+    tasks {
+      id
+      coursename
+      title
+      duedate
+      percentage
+      priority
+      comments
+    }
+    author
+  }
+}
+query ListCourses(
+  $filter: ModelCourseFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listCourses(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      coursename
+      instructor
+      color
+      meetingdays
+      tasks {
+        id
+        coursename
+        title
+        duedate
+        percentage
+        priority
+        comments
+      }
+      author
+    }
+    nextToken
+  }
+}
+query GetTask($id: ID!) {
+  getTask(id: $id) {
+    id
+    coursename
+    title
+    duedate
+    percentage
+    priority
+    comments
+  }
+}
+query ListTasks(
+  $filter: ModelTaskFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      coursename
+      title
+      duedate
+      percentage
+      priority
+      comments
+    }
+    nextToken
+  }
+}

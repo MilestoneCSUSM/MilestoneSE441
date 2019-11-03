@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-milestone-dev-170237-authRole",
+            "UnauthRoleArn": "arn:aws:iam::677463654753:role/amplify-milestone-dev-170237-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::677463654753:role/amplify-milestone-dev-170237-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "amplify-milestone-dev-170237-deployment",
+            "UnauthRoleName": "amplify-milestone-dev-170237-unauthRole",
+            "StackName": "amplify-milestone-dev-170237",
+            "StackId": "arn:aws:cloudformation:us-west-2:677463654753:stack/amplify-milestone-dev-170237/bf9f38b0-fb71-11e9-9b91-02b037911a52"
+        },
+        "categories": {
+            "auth": {
+                "milestonebab0bf9d": {}
+            }
+        }
+    }
+}

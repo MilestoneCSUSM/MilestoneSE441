@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddTaskActivity">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:text="Tasks"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/taskcoursename"
+        android:layout_width="329dp"
+        android:layout_height="55dp"
+        android:background="@drawable/shapes"
+        android:gravity="center"
+        android:hint="Course Name"
+        android:visibility="visible"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="2dp"
+        app:boxCornerRadiusBottomStart="2dp"
+        app:boxCornerRadiusTopEnd="2dp"
+        app:boxCornerRadiusTopStart="2dp"
+        app:boxStrokeColor="#2196F3"
+        app:boxStrokeWidth="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.072">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/taskcoursenamebox"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:maxLength="30"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tasktitle"
+        android:layout_width="331dp"
+        android:layout_height="55dp"
+        android:background="@drawable/shapes"
+        android:gravity="center"
+        android:hint="Task Title"
+        android:visibility="visible"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="2dp"
+        app:boxCornerRadiusBottomStart="2dp"
+        app:boxCornerRadiusTopEnd="2dp"
+        app:boxCornerRadiusTopStart="2dp"
+        app:boxStrokeColor="#2196F3"
+        app:boxStrokeWidth="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskcoursename"
+        app:layout_constraintVertical_bias="0.02">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tasktitlebox"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:maxLength="30"
+            android:singleLine="true"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="332dp"
+        android:layout_height="120dp"
+        android:background="@drawable/shapes"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:maxDate="01/01/2030"
+        android:startYear="2019"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tasktitle"
+        app:layout_constraintVertical_bias="0.035" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/taskpriority"
+        android:layout_width="332dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/shapes"
+        android:gravity="center"
+        android:hint="Priority (High, Medium, Low, None)"
+        android:visibility="visible"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="2dp"
+        app:boxCornerRadiusBottomStart="2dp"
+        app:boxCornerRadiusTopEnd="2dp"
+        app:boxCornerRadiusTopStart="2dp"
+        app:boxStrokeColor="#2196F3"
+        app:boxStrokeWidth="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/datePicker">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/taskprioritybox"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:maxLength="6"
+            android:singleLine="true"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/taskpercentage"
+        android:layout_width="332dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/shapes"
+        android:gravity="center"
+        android:hint="Percentage"
+        android:visibility="visible"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="2dp"
+        app:boxCornerRadiusBottomStart="2dp"
+        app:boxCornerRadiusTopEnd="2dp"
+        app:boxCornerRadiusTopStart="2dp"
+        app:boxStrokeColor="#2196F3"
+        app:boxStrokeWidth="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskpriority">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/taskpercentagebox"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:maxLength="3"
+            android:singleLine="true"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/taskcomments"
+        android:layout_width="328dp"
+        android:layout_height="121dp"
+        android:background="@drawable/shapes"
+        android:gravity="center"
+        android:hint="Comments (Max 255 Characters)"
+        android:visibility="visible"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="2dp"
+        app:boxCornerRadiusBottomStart="2dp"
+        app:boxCornerRadiusTopEnd="2dp"
+        app:boxCornerRadiusTopStart="2dp"
+        app:boxStrokeColor="#2196F3"
+        app:boxStrokeWidth="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskpercentage"
+        app:layout_constraintVertical_bias="0.231">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/taskcommentbox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:maxLength="255"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/addtaskbtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#2196F3"
+        android:buttonTint="@color/colorPrimaryDark"
+        android:fontFamily="monospace"
+        android:text="Add Task"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
