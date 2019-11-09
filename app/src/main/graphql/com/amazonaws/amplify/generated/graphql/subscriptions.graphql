@@ -33,16 +33,20 @@ subscription OnCreateCourse {
     instructor
     color
     meetingdays
-    tasks {
-      id
-      coursename
-      title
-      duedate
-      percentage
-      priority
-      comments
-    }
     author
+    tasks {
+      items {
+        id
+        coursename
+        title
+        duedate
+        percentage
+        priority
+        comments
+        completed
+      }
+      nextToken
+    }
   }
 }
 subscription OnUpdateCourse {
@@ -52,16 +56,20 @@ subscription OnUpdateCourse {
     instructor
     color
     meetingdays
-    tasks {
-      id
-      coursename
-      title
-      duedate
-      percentage
-      priority
-      comments
-    }
     author
+    tasks {
+      items {
+        id
+        coursename
+        title
+        duedate
+        percentage
+        priority
+        comments
+        completed
+      }
+      nextToken
+    }
   }
 }
 subscription OnDeleteCourse {
@@ -71,48 +79,88 @@ subscription OnDeleteCourse {
     instructor
     color
     meetingdays
-    tasks {
-      id
-      coursename
-      title
-      duedate
-      percentage
-      priority
-      comments
-    }
     author
+    tasks {
+      items {
+        id
+        coursename
+        title
+        duedate
+        percentage
+        priority
+        comments
+        completed
+      }
+      nextToken
+    }
   }
 }
 subscription OnCreateTask {
   onCreateTask {
     id
+    course {
+      id
+      coursename
+      instructor
+      color
+      meetingdays
+      author
+      tasks {
+        nextToken
+      }
+    }
     coursename
     title
     duedate
     percentage
     priority
     comments
+    completed
   }
 }
 subscription OnUpdateTask {
   onUpdateTask {
     id
+    course {
+      id
+      coursename
+      instructor
+      color
+      meetingdays
+      author
+      tasks {
+        nextToken
+      }
+    }
     coursename
     title
     duedate
     percentage
     priority
     comments
+    completed
   }
 }
 subscription OnDeleteTask {
   onDeleteTask {
     id
+    course {
+      id
+      coursename
+      instructor
+      color
+      meetingdays
+      author
+      tasks {
+        nextToken
+      }
+    }
     coursename
     title
     duedate
     percentage
     priority
     comments
+    completed
   }
 }

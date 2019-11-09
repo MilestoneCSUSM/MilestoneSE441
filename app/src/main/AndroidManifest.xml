@@ -16,22 +16,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".CourseMenuActivity"
+            android:name=".TaskViewActivity"
             android:noHistory="true"
-            android:parentActivityName=".MainActivity">
-        </activity>
+            android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".CourseMenuActivity"
+            android:label=""
+            android:noHistory="true"
+            android:parentActivityName=".MainActivity"></activity>
         <activity
             android:name=".AddTaskActivity"
+            android:label=""
             android:noHistory="true"
-            android:parentActivityName=".MainActivity">
-        </activity>
+            android:parentActivityName=".MainActivity"></activity>
         <activity
             android:name=".AddCourseActivity"
+            android:label=""
             android:noHistory="true"
-            android:parentActivityName=".CourseMenuActivity" >
-        </activity>
-        <activity android:name=".MainActivity" >
-        </activity>
+            android:parentActivityName=".CourseMenuActivity"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:label=""></activity>
         <activity
             android:name=".AuthenticationActivity"
             android:noHistory="true">

@@ -12,16 +12,18 @@ type Course @model {
   instructor: String!
   color: String!
   meetingdays: String!
-  tasks: [Task!]
   author: String!
+  tasks: [Task] @connection(name: "CourseTasks")
 }
 
 type Task @model {
   id: ID!
+  course: Course @connection(name: "CourseTasks")
   coursename: String!
   title: String!
   duedate: String!
-  percentage: Float
-  priority: Int
+  percentage: Float!
+  priority: String!
   comments: String!
+  completed: Boolean!
 }

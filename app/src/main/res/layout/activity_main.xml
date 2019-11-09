@@ -22,6 +22,14 @@
     tools:context=".MainActivity">
 
     <include layout="@layout/content_main" />
+    <!--
+    <Button
+        android:id="@+id/tmpbtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="tmp"
+        />
+        -->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 <!--Card LAYOUT VERSION

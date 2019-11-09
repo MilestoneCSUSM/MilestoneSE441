@@ -13,23 +13,34 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.amazonaws.amplify.generated.graphql.ListCoursesQuery;
+import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
+import com.apollographql.apollo.GraphQLCall;
+import com.apollographql.apollo.api.Response;
+import com.apollographql.apollo.exception.ApolloException;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nonnull;
 
 public class CourseMenuActivity extends AppCompatActivity {
     private Spinner courseSpinner;
     private final String TAG = CourseMenuActivity.class.getSimpleName();
+    private ArrayList<ListCoursesQuery.Item> mCourses;
+    private List<ListCoursesQuery.Item> mcData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_menu);
+        query();
         addItemsToSpinner();
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        Button btn1 = (Button) findViewById(R.id.addcoursebtn);
+        Button btn1 = (Button) findViewById(R.id.gotoaddcourse);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,17 +51,47 @@ public class CourseMenuActivity extends AppCompatActivity {
 
     }
 
+    public void query(){
+        ClientFactory.appSyncClient().query(ListCoursesQuery.builder().build())
+                .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
+                .enqueue(queryCallback);
+    }
+
+    private GraphQLCall.Callback<ListCoursesQuery.Data> queryCallback = new GraphQLCall.Callback<ListCoursesQuery.Data>() {
+        @Override
+        public void onResponse(@Nonnull Response<ListCoursesQuery.Data> response) {
+            mCourses = new ArrayList<>(response.data().listCourses().items());
+
+            runOnUiThread(new Runnable(){
+                public void run(){
+                    setCourses(mCourses);
+                }
+            });
+
+
+            Log.i(TAG, "Retrieved Courses: " + mCourses.toString() + mCourses.size());
+        }
+
+        @Override
+        public void onFailure(@Nonnull ApolloException e) {
+            Log.e(TAG, e.toString());
+
+        }
+    };
+
+    public void setCourses(List<ListCoursesQuery.Item> items){
+        mcData = items;
+        addItemsToSpinner();
+    }
 
     //SAMPLE DATA HARDCODED
     public void addItemsToSpinner() {
         courseSpinner = (Spinner) findViewById(R.id.courseSpinner);
-        List<String> courseList = new ArrayList<String>();
+        List<String> courseList = new ArrayList<>();
 
-        //TEMPORARY FILLER COURSE NAMES MUST BE POPULATED BY CALL TO SERVER
-        courseList.add("Software Engineering - CS441");
-        courseList.add("CS497-6: Cyber Security");
-        courseList.add("Operations Management - OM302");
-        courseList.add("Operating Systems - CS440");
+        for(int i = 0; i<mcData.size();i++){
+            courseList.add(mcData.get(i).coursename());
+        }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, courseList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

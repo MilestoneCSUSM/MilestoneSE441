@@ -31,16 +31,20 @@ query GetCourse($id: ID!) {
     instructor
     color
     meetingdays
-    tasks {
-      id
-      coursename
-      title
-      duedate
-      percentage
-      priority
-      comments
-    }
     author
+    tasks {
+      items {
+        id
+        coursename
+        title
+        duedate
+        percentage
+        priority
+        comments
+        completed
+      }
+      nextToken
+    }
   }
 }
 query ListCourses(
@@ -55,16 +59,10 @@ query ListCourses(
       instructor
       color
       meetingdays
-      tasks {
-        id
-        coursename
-        title
-        duedate
-        percentage
-        priority
-        comments
-      }
       author
+      tasks {
+        nextToken
+      }
     }
     nextToken
   }
@@ -72,12 +70,24 @@ query ListCourses(
 query GetTask($id: ID!) {
   getTask(id: $id) {
     id
+    course {
+      id
+      coursename
+      instructor
+      color
+      meetingdays
+      author
+      tasks {
+        nextToken
+      }
+    }
     coursename
     title
     duedate
     percentage
     priority
     comments
+    completed
   }
 }
 query ListTasks(
@@ -88,12 +98,21 @@ query ListTasks(
   listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      course {
+        id
+        coursename
+        instructor
+        color
+        meetingdays
+        author
+      }
       coursename
       title
       duedate
       percentage
       priority
       comments
+      completed
     }
     nextToken
   }

@@ -6,7 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
 import com.amazonaws.mobile.client.AWSMobileClient;
+import com.squareup.timessquare.CalendarPickerView;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = MainActivity.class.getSimpleName();
@@ -15,6 +25,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ClientFactory.init(this);
+
+        DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy");
+        String date = df.format(Calendar.getInstance().getTime());
+        TextView mdy = (TextView) findViewById(R.id.dateDisplay);
+        mdy.setText(date);
+
+        Date today = new Date();
+        Calendar sixmonths = Calendar.getInstance();
+        sixmonths.add(Calendar.MONTH, 6);
+
+        CalendarPickerView datePicker = findViewById(R.id.calendar);
+        datePicker.init(today,sixmonths.getTime()).withSelectedDate(today);
+
+        datePicker.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(Date date) {
+                Calendar calSelected = Calendar.getInstance();
+                calSelected.setTime(date);
+                String selecetedDate = "" + (calSelected.get(Calendar.MONTH)+1) + "/"
+                        + calSelected.get(Calendar.DAY_OF_MONTH) + "/" + calSelected.get(Calendar.YEAR);
+                Intent acintent = new Intent(MainActivity.this, TaskViewActivity.class);
+                acintent.putExtra("date",selecetedDate);
+                startActivity(acintent);
+            }
+
+            @Override
+            public void onDateUnselected(Date date) {
+
+            }
+        });
     }
 
     @Override
