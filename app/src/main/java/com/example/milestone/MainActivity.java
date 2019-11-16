@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.TextView;
 
 import com.amazonaws.mobile.client.AWSMobileClient;
@@ -20,24 +21,53 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = MainActivity.class.getSimpleName();
-
+    private CalendarView datePicker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ClientFactory.init(this);
 
-        DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy");
-        String date = df.format(Calendar.getInstance().getTime());
-        TextView mdy = (TextView) findViewById(R.id.dateDisplay);
-        mdy.setText(date);
-
+        /*
         Date today = new Date();
         Calendar sixmonths = Calendar.getInstance();
         sixmonths.add(Calendar.MONTH, 6);
 
         CalendarPickerView datePicker = findViewById(R.id.calendar);
         datePicker.init(today,sixmonths.getTime()).withSelectedDate(today);
+        */
+        datePicker = (CalendarView) findViewById(R.id.calendar);
+
+        DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy");
+        String date = df.format(Calendar.getInstance().getTime());
+        TextView mdy = (TextView) findViewById(R.id.dateDisplay);
+        mdy.setText(date);
+
+        datePicker.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int day) {
+                String selecetedDate = (month+1) + "/" + day + "/" + year;
+                Intent acintent = new Intent(MainActivity.this, TaskViewActivity.class);
+                acintent.putExtra("date",selecetedDate);
+                startActivity(acintent);
+            }
+        });
+    }
+    /*
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Date today = new Date();
+        Calendar sixmonths = Calendar.getInstance();
+        sixmonths.add(Calendar.MONTH, 6);
+
+        CalendarPickerView datePicker = findViewById(R.id.calendar);
+        datePicker.init(today,sixmonths.getTime()).withSelectedDate(today);
+
+        DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy");
+        String date = df.format(Calendar.getInstance().getTime());
+        TextView mdy = (TextView) findViewById(R.id.dateDisplay);
+        mdy.setText(date);
 
         datePicker.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
             @Override
@@ -57,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -84,9 +114,10 @@ public class MainActivity extends AppCompatActivity {
             return(true);
         case R.id.signOut:
             AWSMobileClient.getInstance().signOut();
-            finish();
-            System.exit(0);
             Log.i(TAG, "logout clicked");
+            finish();
+
+            System.exit(0);
             return(true);
     }
         return(super.onOptionsItemSelected(item));

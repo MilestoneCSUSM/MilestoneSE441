@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="#edf1fe"
+    tools:context=".TaskViewActivity"
+    >
+
+    <TextView
+        android:id="@+id/txt_class"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Course"
+        android:textAlignment="center"
+        android:paddingTop="12dp"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_classvalue"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Classsssssssssssssssssssssssssssssssssss"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_class"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_priorityvalue"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Class"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_priority"
+        app:layout_constraintTop_toBottomOf="@+id/txt_classvalue" />
+
+    <TextView
+        android:id="@+id/txt_tasktitlevalue"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Class"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_tasktitle"
+        app:layout_constraintTop_toBottomOf="@+id/txt_priorityvalue" />
+
+    <TextView
+        android:id="@+id/txt_percentagevalue"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Class"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_percentage"
+        app:layout_constraintTop_toBottomOf="@+id/txt_tasktitlevalue" />
+
+    <TextView
+        android:id="@+id/txt_commentsvalue"
+        android:layout_width="280dp"
+        android:layout_height="100dp"
+        android:background="@color/colorPrimaryDark"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Class"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_comments"
+        app:layout_constraintTop_toBottomOf="@+id/txt_percentagevalue" />
+
+    <TextView
+        android:id="@+id/txt_priority"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:text="Priority"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:paddingTop="12dp"
+        android:paddingLeft="10dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_class" />
+
+    <TextView
+        android:id="@+id/txt_tasktitle"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:paddingTop="12dp"
+        android:text="Title"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_priority" />
+
+
+    <TextView
+        android:id="@+id/txt_percentage"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:textSize="15sp"
+        android:paddingTop="12dp"
+        android:text="Percentage"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_tasktitle" />
+
+    <TextView
+        android:id="@+id/txt_comments"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@color/colorPrimaryDark"
+        android:paddingTop="12dp"
+        android:text="Comments"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_percentage"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/completetaskbtn"
+        android:layout_width="124dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="308dp"
+        android:backgroundTint="#2196F3"
+        android:buttonTint="@color/colorPrimaryDark"
+        android:fontFamily="monospace"
+        android:text="Complete"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/edittaskbtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/edittaskbtn"
+        android:layout_width="124dp"
+        android:layout_height="44dp"
+        android:backgroundTint="#2196F3"
+        android:buttonTint="@color/colorPrimaryDark"
+        android:fontFamily="monospace"
+        android:text="Edit"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/deletetaskbtn"
+        app:layout_constraintHorizontal_bias="0.953"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/deletetaskbtn"
+        android:layout_width="124dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="308dp"
+        android:backgroundTint="#2196F3"
+        android:buttonTint="@color/colorPrimaryDark"
+        android:fontFamily="monospace"
+        android:text="Delete"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.986"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

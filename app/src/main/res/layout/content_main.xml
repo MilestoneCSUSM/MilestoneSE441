@@ -9,6 +9,7 @@
     tools:showIn="@layout/activity_main"
     android:background="@color/colorPrimary">
 
+
     <TextView
         android:id="@+id/dateDisplay"
         android:layout_width="210dp"
@@ -30,14 +31,32 @@
         android:textAlignment="center"
         android:textColor="#fff"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/calendar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.041" />
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <CalendarView
+        android:id="@+id/calendar"
+        android:layout_width="412dp"
+        android:layout_height="366dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/shapes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.275" />
+
+    <!--
     <com.squareup.timessquare.CalendarPickerView
         android:id="@+id/calendar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_width="412dp"
+        android:layout_height="544dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateDisplay" />
+        -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

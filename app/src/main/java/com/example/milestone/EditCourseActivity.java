@@ -17,49 +17,103 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.amazonaws.amplify.generated.graphql.CreateCourseMutation;
-import com.amazonaws.amplify.generated.graphql.ListCoursesQuery;
+import com.amazonaws.amplify.generated.graphql.UpdateCourseMutation;
 import com.amazonaws.mobile.client.AWSMobileClient;
-import com.amazonaws.mobile.config.AWSConfiguration;
 import com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient;
 import com.apollographql.apollo.GraphQLCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
 import type.CreateCourseInput;
+import type.UpdateCourseInput;
 
-public class AddCourseActivity extends AppCompatActivity {
-
-    private final String TAG = AddCourseActivity.class.getSimpleName();
-    private AWSAppSyncClient mAWSAppSyncClient;
+public class EditCourseActivity extends AppCompatActivity {
+    private final String TAG = EditCourseActivity.class.getSimpleName();
     private Spinner coursecolors;
     private HashMap<String, String> colorMap;
+    private String cid,cname;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_course);
+        setContentView(R.layout.activity_edit_course);
+        Intent intent = getIntent();
+        cid = intent.getStringExtra("cid");
+        cname = intent.getStringExtra("cname");
+        Log.i(TAG,"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"+cid);
+        EditText cnamebox = ((EditText) findViewById(R.id.editcoursenamebox));
+        cnamebox.setText(cname);
         setColorsSpinner();
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle(" ");
 
-        Button btnAddCourse = (Button) findViewById(R.id.addcoursebtn);
+        Button btnAddCourse = (Button) findViewById(R.id.updatecoursebtn);
         btnAddCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runMutation();
-                setContentView(R.layout.activity_main);
+                Intent homeIntent = new Intent(EditCourseActivity.this,MainActivity.class);
+                startActivity(homeIntent);
             }
         });
     }
+
+    private void runMutation(){
+        final String username = AWSMobileClient.getInstance().getUsername().toString();
+        final String courseName = ((EditText) findViewById(R.id.editcoursenamebox)).getText().toString();
+        final String instructor = ((EditText) findViewById(R.id.editinstructornamebox)).getText().toString();
+        final String meetingDays = getMeetingDays();
+        final String color = getSelectedColor();
+
+        UpdateCourseInput updateCourse = UpdateCourseInput.builder().
+                id(cid).
+                coursename(courseName).
+                instructor(instructor).
+                meetingdays(meetingDays).
+                color(color).
+                author(username).build();
+
+        UpdateCourseMutation updateCourseMutation = UpdateCourseMutation.builder()
+                .input(updateCourse)
+                .build();
+
+        ClientFactory.appSyncClient().mutate(updateCourseMutation).enqueue(mutationCallback);
+    }
+
+    private GraphQLCall.Callback<UpdateCourseMutation.Data> mutationCallback = new GraphQLCall.Callback<UpdateCourseMutation.Data>() {
+        @Override
+        public void onResponse(@Nonnull final Response<UpdateCourseMutation.Data> response) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.i("Results", "Updated Course");
+                    Toast.makeText(EditCourseActivity.this, "Updated Course", Toast.LENGTH_SHORT).show();
+                    EditCourseActivity.this.finish();
+                }
+            });
+        }
+
+        @Override
+        public void onFailure(@Nonnull final ApolloException e) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.e("", "Failed to perform AddCourseMutation", e);
+                    Toast.makeText(EditCourseActivity.this, "Failed to edit Course", Toast.LENGTH_SHORT).show();
+                    EditCourseActivity.this.finish();
+                }
+            });
+        }
+    };
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -68,7 +122,7 @@ public class AddCourseActivity extends AppCompatActivity {
     }
 
     public void setColorsSpinner(){
-        coursecolors = (Spinner) findViewById(R.id.coursecolorbox);
+        coursecolors = (Spinner) findViewById(R.id.editcoursecolorbox);
         colorMap = new HashMap<String, String>();
         colorMap.put("Red", "#dd2424");
         colorMap.put("Blue", "#1e72bf");
@@ -97,13 +151,13 @@ public class AddCourseActivity extends AppCompatActivity {
     //Gets the meeting days from each checkbox in the layout and returns it as a string.
     public String getMeetingDays(){
         StringBuilder meetingDays = new StringBuilder();
-        CheckBox sunday = findViewById(R.id.checkBoxSunday);
-        CheckBox monday = findViewById(R.id.checkBoxMonday);
-        CheckBox tuesday = findViewById(R.id.checkBoxTuesday);
-        CheckBox wednesday = findViewById(R.id.checkBoxWednesday);
-        CheckBox thursday = findViewById(R.id.checkBoxThursday);
-        CheckBox friday = findViewById(R.id.checkBoxFriday);
-        CheckBox saturday = findViewById(R.id.checkBoxSaturday);
+        CheckBox sunday = findViewById(R.id.echeckBoxSunday);
+        CheckBox monday = findViewById(R.id.echeckBoxMonday);
+        CheckBox tuesday = findViewById(R.id.echeckBoxTuesday);
+        CheckBox wednesday = findViewById(R.id.echeckBoxWednesday);
+        CheckBox thursday = findViewById(R.id.echeckBoxThursday);
+        CheckBox friday = findViewById(R.id.echeckBoxFriday);
+        CheckBox saturday = findViewById(R.id.echeckBoxSaturday);
 
         List<CheckBox> days = new ArrayList<CheckBox>();
         days.add(sunday);
@@ -123,75 +177,25 @@ public class AddCourseActivity extends AppCompatActivity {
         return meetingDays.toString();
     }
 
-    private void runMutation(){
-        final String id = UUID.randomUUID().toString();
-        final String username = AWSMobileClient.getInstance().getUsername().toString();
-        final String courseName = ((EditText) findViewById(R.id.coursenamebox)).getText().toString();
-        final String instructor = ((EditText) findViewById(R.id.instructornamebox)).getText().toString();
-        final String meetingDays = getMeetingDays();
-        final String color = getSelectedColor();
-        CreateCourseInput createCourseInput = CreateCourseInput.builder().
-                id(id).
-                coursename(courseName).
-                instructor(instructor).
-                meetingdays(meetingDays).
-                color(color).
-                author(username).build();
-        Log.i(TAG, " WHATS GOING ON!!!!!!!!!!!!!!!!!!" + createCourseInput.author()+createCourseInput.id()+createCourseInput.coursename());
-        CreateCourseMutation addCourseMutation = CreateCourseMutation.builder()
-                .input(createCourseInput)
-                .build();
-
-        ClientFactory.appSyncClient().mutate(addCourseMutation).enqueue(mutationCallback);
-
-    }
-
-    private GraphQLCall.Callback<CreateCourseMutation.Data> mutationCallback = new GraphQLCall.Callback<CreateCourseMutation.Data>() {
-        @Override
-        public void onResponse(@Nonnull final Response<CreateCourseMutation.Data> response) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(AddCourseActivity.this, "Added Course", Toast.LENGTH_SHORT).show();
-                    Log.i("Results", "Added Course");
-                    AddCourseActivity.this.finish();
-                }
-            });
-        }
-
-        @Override
-        public void onFailure(@Nonnull final ApolloException e) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.e("", "Failed to perform AddCourseMutation", e);
-                    Toast.makeText(AddCourseActivity.this, "Failed to add Course", Toast.LENGTH_SHORT).show();
-                    AddCourseActivity.this.finish();
-                }
-            });
-        }
-    };
-
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.toHome:
-                setContentView(R.layout.activity_main);
-                AddCourseActivity.this.finish();
+                Intent homeIntent = new Intent(EditCourseActivity.this,MainActivity.class);
+                startActivity(homeIntent);
+                EditCourseActivity.this.finish();
                 Log.i(TAG, "home clicked");
                 return(true);
             case R.id.courses:
-                Intent courseIntent = new Intent(AddCourseActivity.this,CourseMenuActivity.class);
+                Intent courseIntent = new Intent(EditCourseActivity.this,CourseMenuActivity.class);
                 startActivity(courseIntent);
-                AddCourseActivity.this.finish();
+                EditCourseActivity.this.finish();
                 Log.i(TAG, "courses clicked");
                 return(true);
             case R.id.tasks:
-                Intent taskIntent = new Intent(AddCourseActivity.this,AddTaskActivity.class);
+                Intent taskIntent = new Intent(EditCourseActivity.this,AddTaskActivity.class);
                 startActivity(taskIntent);
-                AddCourseActivity.this.finish();
+                EditCourseActivity.this.finish();
                 Log.i(TAG, "tasks clicked");
                 return(true);
             case R.id.signOut:

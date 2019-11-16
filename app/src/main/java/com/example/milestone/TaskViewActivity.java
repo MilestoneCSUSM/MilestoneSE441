@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import com.amazonaws.amplify.generated.graphql.GetTaskQuery;
 import com.amazonaws.amplify.generated.graphql.ListCoursesQuery;
 import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
+import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
 import com.apollographql.apollo.GraphQLCall;
 import com.apollographql.apollo.api.Response;
@@ -22,6 +23,9 @@ import com.apollographql.apollo.exception.ApolloException;
 import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
+
+import type.ModelStringFilterInput;
+import type.ModelTaskFilterInput;
 
 public class TaskViewActivity extends AppCompatActivity {
     private final String TAG = TaskViewActivity.class.getSimpleName();
@@ -47,7 +51,7 @@ public class TaskViewActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-        //query();
+        query();
     }
 
     @Override
@@ -57,11 +61,21 @@ public class TaskViewActivity extends AppCompatActivity {
     }
 
     public void query(){
+        /*
         ClientFactory.appSyncClient().query(ListTasksQuery.builder().build())
                 .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
                 .enqueue(queryCallback);
+        */
+        ModelStringFilterInput msfi = ModelStringFilterInput.builder().eq(dateSent).build();
+        ModelTaskFilterInput mtfi = ModelTaskFilterInput.builder().duedate(msfi).build();
+
+        ClientFactory.appSyncClient().query(ListTasksQuery.builder().filter(mtfi).build())
+                .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
+                .enqueue(queryCallback);
+
     }
 
+    /*
     public void filterTasksByDate(){
         filteredMTasks = new ArrayList<>();
         for(int i = 0;i<mTasks.size();i++){
@@ -71,16 +85,16 @@ public class TaskViewActivity extends AppCompatActivity {
         }
         Log.i(TAG,"Filtered Tasks: "+ filteredMTasks.toString());
     }
-
+    */
     private GraphQLCall.Callback<ListTasksQuery.Data> queryCallback = new GraphQLCall.Callback<ListTasksQuery.Data>() {
         @Override
         public void onResponse(@Nonnull Response<ListTasksQuery.Data> response) {
             mTasks = new ArrayList<>(response.data().listTasks().items());
-            filterTasksByDate();
-
+            //filterTasksByDate();
+            Log.i(TAG, "FROM TASKS VIEW SOMETHINGS WRONG:  "+  mTasks.get(0).toString());
             runOnUiThread(new Runnable(){
                 public void run(){
-                    mAdapter.setItems(filteredMTasks);
+                    mAdapter.setItems(mTasks);
                     mAdapter.notifyDataSetChanged();
                 }
             });
@@ -106,18 +120,24 @@ public class TaskViewActivity extends AppCompatActivity {
             case R.id.toHome:
                 setContentView(R.layout.activity_main);
                 Log.i(TAG, "home clicked");
+                TaskViewActivity.this.finish();
                 return(true);
             case R.id.courses:
-                setContentView(R.layout.activity_course_menu);
+                Intent courseintent = new Intent(TaskViewActivity.this,CourseMenuActivity.class);
+                startActivity(courseintent);
                 Log.i(TAG, "courses clicked");
+                TaskViewActivity.this.finish();
                 return(true);
             case R.id.tasks:
-                Intent intent = new Intent(TaskViewActivity.this,AddTaskActivity.class);
-                startActivity(intent);
-                //setContentView(R.layout.activity_add_task);
+                Intent taskintent = new Intent(TaskViewActivity.this,AddTaskActivity.class);
+                startActivity(taskintent);
                 Log.i(TAG, "tasks clicked");
+                TaskViewActivity.this.finish();
                 return(true);
             case R.id.signOut:
+                AWSMobileClient.getInstance().signOut();
+                finish();
+                System.exit(0);
                 Log.i(TAG, "logout clicked");
                 return(true);
         }

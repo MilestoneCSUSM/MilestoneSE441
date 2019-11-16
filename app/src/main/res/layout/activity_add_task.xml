@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".MainActivity">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -16,7 +21,7 @@
         android:text="Tasks"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,8 +30,8 @@
 
     <Spinner
         android:id="@+id/taskCourseSpinner"
-        android:layout_width="329dp"
-        android:layout_height="41dp"
+        android:layout_width="330dp"
+        android:layout_height="40dp"
         android:background="@drawable/shapes"
         app:layout_constraintBottom_toTopOf="@+id/addtaskbtn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,6 +43,7 @@
         android:id="@+id/tasktitle"
         android:layout_width="331dp"
         android:layout_height="55dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/shapes"
         android:gravity="center"
         android:hint="Task Title"
@@ -48,13 +54,11 @@
         app:boxCornerRadiusTopEnd="2dp"
         app:boxCornerRadiusTopStart="2dp"
         app:boxStrokeColor="#2196F3"
+
         app:boxStrokeWidth="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskCourseSpinner"
-        app:layout_constraintVertical_bias="0.02">
+        app:layout_constraintTop_toBottomOf="@+id/taskCourseSpinner">
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -62,24 +66,24 @@
             android:layout_width="match_parent"
             android:layout_height="41dp"
             android:maxLength="30"
-            android:singleLine="true"/>
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <DatePicker
         android:id="@+id/datePicker"
-        android:layout_width="332dp"
-        android:layout_height="120dp"
+        android:layout_width="328dp"
+        android:layout_height="118dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/shapes"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
         android:maxDate="01/01/2030"
+
         android:startYear="2019"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tasktitle"
-        app:layout_constraintVertical_bias="0.035" />
+        app:layout_constraintTop_toBottomOf="@+id/tasktitle" />
 
     <Spinner
         android:id="@+id/taskpriority"
@@ -143,8 +147,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/taskcomments"
-        android:layout_width="328dp"
+        android:layout_width="329dp"
         android:layout_height="121dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/shapes"
         android:gravity="center"
         android:hint="Comments (Max 255 Characters)"
@@ -155,20 +160,19 @@
         app:boxCornerRadiusTopEnd="2dp"
         app:boxCornerRadiusTopStart="2dp"
         app:boxStrokeColor="#2196F3"
+
         app:boxStrokeWidth="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskpercentage"
-        app:layout_constraintVertical_bias="0.231">
+        app:layout_constraintTop_toBottomOf="@+id/taskpercentage">
 
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/taskcommentbox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:maxLength="255"/>
+            android:maxLength="255" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -176,13 +180,17 @@
         android:id="@+id/addtaskbtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="584dp"
         android:backgroundTint="#2196F3"
         android:buttonTint="@color/colorPrimaryDark"
         android:fontFamily="monospace"
         android:text="Add Task"
+
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

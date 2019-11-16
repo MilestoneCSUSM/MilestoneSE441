@@ -5,24 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".CourseMenuActivity">
+    tools:context=".MainActivity">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#edf1fe"
-    android:id="@+id/cslay"
-    tools:context=".AddCourseActivity">
-
+    tools:context=".CourseMenuActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/etextView"
         android:layout_width="413dp"
         android:layout_height="56dp"
         android:fontFamily="monospace"
-        android:text="Course"
+        android:text="Edit Course"
         android:textAlignment="center"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textStyle="bold"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,12 +30,12 @@
         app:layout_constraintVertical_bias="0.001" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/etextInputLayout"
         android:layout_width="331dp"
         android:layout_height="69dp"
         android:background="@drawable/shapes"
         android:gravity="center"
-        android:hint="CourseName"
+        android:hint="Course Name"
         android:visibility="visible"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusBottomEnd="2dp"
@@ -48,11 +46,11 @@
         app:boxStrokeWidth="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/etextView">
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/coursenamebox"
+            android:id="@+id/editcoursenamebox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:maxLength="30"
@@ -60,7 +58,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
+        android:id="@+id/etextInputLayout2"
         android:layout_width="331dp"
         android:layout_height="69dp"
         android:layout_marginTop="16dp"
@@ -77,11 +75,11 @@
         app:boxStrokeWidth="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/etextInputLayout">
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/instructornamebox"
+            android:id="@+id/editinstructornamebox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:maxLength="30"
@@ -89,7 +87,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/etextView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -101,23 +99,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.138"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/etextInputLayout2" />
 
     <CheckBox
-        android:id="@+id/checkBoxSunday"
+        android:id="@+id/echeckBoxSunday"
         android:layout_width="121dp"
         android:layout_height="22dp"
         android:buttonTint="@color/colorPrimaryDark"
         android:text="Sunday"
-
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.141"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/etextView2"
         app:layout_constraintVertical_bias="0.0" />
 
     <CheckBox
-        android:id="@+id/checkBoxMonday"
+        android:id="@+id/echeckBoxMonday"
         android:layout_width="112dp"
         android:layout_height="22dp"
         android:layout_marginStart="40dp"
@@ -127,11 +125,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.003"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxSunday"
+        app:layout_constraintTop_toBottomOf="@+id/echeckBoxSunday"
         app:layout_constraintVertical_bias="0.0" />
 
     <CheckBox
-        android:id="@+id/checkBoxTuesday"
+        android:id="@+id/echeckBoxTuesday"
         android:layout_width="117dp"
         android:layout_height="23dp"
         android:buttonTint="@color/colorPrimaryDark"
@@ -140,11 +138,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.136"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxMonday"
+        app:layout_constraintTop_toBottomOf="@+id/echeckBoxMonday"
         app:layout_constraintVertical_bias="0.0" />
 
     <CheckBox
-        android:id="@+id/checkBoxWednesday"
+        android:id="@+id/echeckBoxWednesday"
         android:layout_width="120dp"
         android:layout_height="23dp"
         android:buttonTint="@color/colorPrimaryDark"
@@ -153,11 +151,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.137"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxTuesday"
+        app:layout_constraintTop_toBottomOf="@+id/echeckBoxTuesday"
         app:layout_constraintVertical_bias="0.0" />
 
     <CheckBox
-        android:id="@+id/checkBoxThursday"
+        android:id="@+id/echeckBoxThursday"
         android:layout_width="113dp"
         android:layout_height="20dp"
         android:buttonTint="@color/colorPrimaryDark"
@@ -166,11 +164,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.134"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxWednesday"
+        app:layout_constraintTop_toBottomOf="@+id/echeckBoxWednesday"
         app:layout_constraintVertical_bias="0.0" />
 
     <CheckBox
-        android:id="@+id/checkBoxFriday"
+        android:id="@+id/echeckBoxFriday"
         android:layout_width="115dp"
         android:layout_height="21dp"
         android:buttonTint="@color/colorPrimaryDark"
@@ -179,11 +177,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.135"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxThursday"
+        app:layout_constraintTop_toBottomOf="@+id/echeckBoxThursday"
         app:layout_constraintVertical_bias="0.0" />
 
     <CheckBox
-        android:id="@+id/checkBoxSaturday"
+        android:id="@+id/echeckBoxSaturday"
         android:layout_width="120dp"
         android:layout_height="25dp"
         android:buttonTint="@color/colorPrimaryDark"
@@ -192,11 +190,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.137"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxFriday"
+        app:layout_constraintTop_toBottomOf="@+id/echeckBoxFriday"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/etextView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -207,34 +205,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.131"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxSaturday"
+        app:layout_constraintTop_toBottomOf="@+id/echeckBoxSaturday"
         app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
-        android:id="@+id/coursecolorbox"
+        android:id="@+id/editcoursecolorbox"
         android:layout_width="329dp"
         android:layout_height="60dp"
         android:background="@drawable/shapes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/etextView3" />
 
     <Button
-        android:id="@+id/addcoursebtn"
+        android:id="@+id/updatecoursebtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         android:backgroundTint="#2196F3"
         android:buttonTint="@color/colorPrimaryDark"
         android:fontFamily="monospace"
-        android:text="Add Course"
+        android:text="Update Course"
 
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coursecolorbox" />
+        app:layout_constraintTop_toBottomOf="@+id/editcoursecolorbox" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

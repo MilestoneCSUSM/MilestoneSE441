@@ -12,34 +12,39 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_milestone"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".EditCourseActivity"
+            android:noHistory="true"
+            android:parentActivityName=".CourseMenuActivity" />
+        <activity
             android:name=".TaskViewActivity"
             android:noHistory="true"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".CourseMenuActivity"
             android:label=""
             android:noHistory="true"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AddTaskActivity"
             android:label=""
             android:noHistory="true"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AddCourseActivity"
             android:label=""
             android:noHistory="true"
-            android:parentActivityName=".CourseMenuActivity"></activity>
+            android:parentActivityName=".CourseMenuActivity" />
         <activity
             android:name=".MainActivity"
-            android:label=""></activity>
+            android:label="" />
         <activity
             android:name=".AuthenticationActivity"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:label="Milestone">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

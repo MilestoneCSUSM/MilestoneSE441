@@ -6,7 +6,7 @@
         android:id="@+id/logo"
         android:orderInCategory="1"
         android:title="logo"
-        android:icon="@drawable/milestonelogo"
+        android:icon="@drawable/milestonelogofilled"
         app:showAsAction="always" />
     <item
         android:id="@+id/courses"
@@ -27,5 +27,15 @@
         android:id="@+id/signOut"
         android:orderInCategory="100"
         android:title="Log Out"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/searchSubs"
+        android:orderInCategory="100"
+        android:title="Search Subscriptions"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/manageSubs"
+        android:orderInCategory="100"
+        android:title="Manage Subscriptions"
         app:showAsAction="ifRoom" />
 </menu>

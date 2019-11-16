@@ -3,6 +3,7 @@ package com.example.milestone;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -93,7 +94,7 @@ public class AddTaskActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(AddTaskActivity.this, "Added pet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddTaskActivity.this, "Added task", Toast.LENGTH_SHORT).show();
                     AddTaskActivity.this.finish();
                     Log.i("Results", "Added Course");
                 }
@@ -106,7 +107,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Log.e("", "Failed to perform AddCourseMutation", e);
-                    Toast.makeText(AddTaskActivity.this, "Failed to add Course", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddTaskActivity.this, "Failed to add Task", Toast.LENGTH_SHORT).show();
                     AddTaskActivity.this.finish();
                 }
             });
@@ -223,16 +224,22 @@ public class AddTaskActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.toHome:
                 setContentView(R.layout.activity_main);
+                AddTaskActivity.this.finish();
                 Log.i(TAG, "home clicked");
                 return(true);
             case R.id.courses:
-                setContentView(R.layout.activity_add_course);
+                Intent courseIntent = new Intent(AddTaskActivity.this,CourseMenuActivity.class);
+                startActivity(courseIntent);
+                AddTaskActivity.this.finish();
                 Log.i(TAG, "courses clicked");
                 return(true);
             case R.id.tasks:
                 Log.i(TAG, "tasks clicked");
                 return(true);
             case R.id.signOut:
+                AWSMobileClient.getInstance().signOut();
+                finish();
+                System.exit(0);
                 Log.i(TAG, "logout clicked");
                 return(true);
         }
