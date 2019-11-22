@@ -33,6 +33,7 @@ public class TaskViewActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     TaskViewAdapter mAdapter;
     private String dateSent;
+    private String username;
 
     private ArrayList<ListTasksQuery.Item> mTasks,filteredMTasks;
 
@@ -40,9 +41,10 @@ public class TaskViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_view);
+        username = AWSMobileClient.getInstance().getUsername();
         Intent intent = getIntent();
         dateSent = intent.getStringExtra("date");
-        Log.i(TAG,"HELLO FROM TASK ACTIVITY. THIS IS THE DATE SENT FROM MAIN: "+ dateSent);
+        //Log.i(TAG,"HELLO FROM TASK ACTIVITY. THIS IS THE DATE SENT FROM MAIN: "+ dateSent);
         mRecyclerView = findViewById(R.id.activitytaskview);
         // use a linear layout manager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -66,7 +68,7 @@ public class TaskViewActivity extends AppCompatActivity {
                 .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
                 .enqueue(queryCallback);
         */
-        ModelStringFilterInput msfi = ModelStringFilterInput.builder().eq(dateSent).build();
+        ModelStringFilterInput msfi = ModelStringFilterInput.builder().eq(username).eq(dateSent).build();
         ModelTaskFilterInput mtfi = ModelTaskFilterInput.builder().duedate(msfi).build();
 
         ClientFactory.appSyncClient().query(ListTasksQuery.builder().filter(mtfi).build())

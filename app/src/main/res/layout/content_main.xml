@@ -47,16 +47,27 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.275" />
 
-    <!--
-    <com.squareup.timessquare.CalendarPickerView
-        android:id="@+id/calendar"
-        android:layout_width="412dp"
-        android:layout_height="544dp"
+    <TextView
+        android:id="@+id/upcomingTasks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:layout_marginTop="1dp"
+        android:text="Upcoming Tasks"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/calendar"
+        tools:layout_editor_absoluteX="100dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mainrecyclerview"
+        android:layout_width="410dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateDisplay" />
-        -->
+        app:layout_constraintTop_toBottomOf="@+id/upcomingTasks" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.example.milestone;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,16 +78,40 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.ViewHo
         }
 
         void bindData(ListTasksQuery.Item item) {
+            int courseColor = Color.parseColor(item.course().color());
+            int lighterCC = lighter(courseColor);
+
             txt_class.setText("Class");
             txt_classvalue.setText(item.coursename());
+            txt_class.setBackgroundColor(courseColor);
+            txt_classvalue.setBackgroundColor(courseColor);
+
             txt_priority.setText("Priority");
             txt_priorityvalue.setText(String.valueOf(item.priority()));
+            txt_priority.setBackgroundColor(lighterCC);
+            txt_priorityvalue.setBackgroundColor(lighterCC);
+
             txt_percentage.setText("Percentage");
             txt_percentageValue.setText(String.valueOf(item.percentage()));
+            txt_percentage.setBackgroundColor(lighterCC);
+            txt_percentageValue.setBackgroundColor(lighterCC);
+
             txt_tasktitle.setText("Title");
             txt_tasktitlevalue.setText(item.title());
+            txt_tasktitle.setBackgroundColor(courseColor);
+            txt_tasktitlevalue.setBackgroundColor(courseColor);
+
             txt_comments.setText("Comments");
             txt_commentsvalue.setText(item.comments());
+            txt_comments.setBackgroundColor(courseColor);
+            txt_commentsvalue.setBackgroundColor(courseColor);
         }
+    }
+    public static int lighter(int color) {
+        float factor = 0.2f;
+        int red = (int) ((Color.red(color) * (1 - factor) / 255 + factor) * 255);
+        int green = (int) ((Color.green(color) * (1 - factor) / 255 + factor) * 255);
+        int blue = (int) ((Color.blue(color) * (1 - factor) / 255 + factor) * 255);
+        return Color.argb(Color.alpha(color), red, green, blue);
     }
 }

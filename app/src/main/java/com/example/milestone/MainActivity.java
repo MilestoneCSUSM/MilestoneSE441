@@ -3,6 +3,9 @@ package com.example.milestone;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,37 +14,63 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
+import com.amazonaws.amplify.generated.graphql.ListCoursesQuery;
+import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
 import com.amazonaws.mobile.client.AWSMobileClient;
+import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
+import com.apollographql.apollo.GraphQLCall;
+import com.apollographql.apollo.api.Response;
+import com.apollographql.apollo.exception.ApolloException;
 import com.squareup.timessquare.CalendarPickerView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.annotation.Nonnull;
+
+import type.ModelCourseFilterInput;
+import type.ModelStringFilterInput;
+import type.ModelTaskFilterInput;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = MainActivity.class.getSimpleName();
     private CalendarView datePicker;
+    private String username;
+    RecyclerView mRecyclerView;
+    UpcomingTaskAdapter mAdapter;
+    private String currDate;
+    private ArrayList<ListTasksQuery.Item> mTasks;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ClientFactory.init(this);
+        //ClientFactory.init(this);
 
-        /*
-        Date today = new Date();
-        Calendar sixmonths = Calendar.getInstance();
-        sixmonths.add(Calendar.MONTH, 6);
+        mRecyclerView = findViewById(R.id.mainrecyclerview);
+        // use a linear layout manager
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // specify an adapter (see also next example)
+        mAdapter = new UpcomingTaskAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
 
-        CalendarPickerView datePicker = findViewById(R.id.calendar);
-        datePicker.init(today,sixmonths.getTime()).withSelectedDate(today);
-        */
+        username = AWSMobileClient.getInstance().getUsername();
+        LocalDateTime ldt = LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        currDate = ldt.format(dtf).toString();
+        Log.i(TAG, "Current Date: " + currDate);
         datePicker = (CalendarView) findViewById(R.id.calendar);
 
         DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy");
         String date = df.format(Calendar.getInstance().getTime());
         TextView mdy = (TextView) findViewById(R.id.dateDisplay);
         mdy.setText(date);
+
 
         datePicker.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -52,7 +81,46 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(acintent);
             }
         });
+        ClientFactory.init(this);
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        query();
+    }
+
+    public void query(){
+
+        ModelStringFilterInput msfi = ModelStringFilterInput.builder().gt(currDate).build();
+        ModelTaskFilterInput mtfi = ModelTaskFilterInput.builder().duedate(msfi).build();
+
+        ClientFactory.appSyncClient().query(ListTasksQuery.builder().filter(mtfi).build())
+                .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
+                .enqueue(queryCallback);
+
+    }
+
+    private GraphQLCall.Callback<ListTasksQuery.Data> queryCallback = new GraphQLCall.Callback<ListTasksQuery.Data>() {
+        @Override
+        public void onResponse(@Nonnull Response<ListTasksQuery.Data> response) {
+            mTasks = new ArrayList<>(response.data().listTasks().items());
+            Log.i(TAG, "tasksbydate" + mTasks.toString());
+            runOnUiThread(new Runnable(){
+                public void run(){
+                    mAdapter.setItems(mTasks);
+                    mAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+
+        @Override
+        public void onFailure(@Nonnull ApolloException e) {
+            Log.e(TAG, e.toString());
+
+        }
+    };
+
     /*
     @Override
     protected void onResume(){
