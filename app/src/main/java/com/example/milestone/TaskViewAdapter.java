@@ -7,11 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,15 +19,24 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.ViewHo
 
     private List<ListTasksQuery.Item> mData = new ArrayList<>();
     private LayoutInflater mInflater;
+    public onItemClickListener mListener;
 
-    TaskViewAdapter(Context context) {
+    public interface onItemClickListener {
+        void onCompleteClick(int position);
+        void onDeleteClick(int position);
+        void onEditClick(int position);
+    }
+
+    public void setOnItemClickListener(onItemClickListener listener){mListener = listener;}
+
+    public TaskViewAdapter(Context context, onItemClickListener listener) {
         this.mInflater = LayoutInflater.from(context);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.recyclerview_row, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mListener);
     }
 
     @Override
@@ -45,7 +54,7 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.ViewHo
         mData = items;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txt_class;
         TextView txt_classvalue;
         TextView txt_priority;
@@ -59,8 +68,9 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.ViewHo
         Button complete,edit,delete;
 
 
-        ViewHolder(View itemView) {
+        public ViewHolder(View itemView, final onItemClickListener listener) {
             super(itemView);
+
             txt_class = itemView.findViewById(R.id.txt_class);
             txt_classvalue = itemView.findViewById(R.id.txt_classvalue);
             txt_priority = itemView.findViewById(R.id.txt_priority);
@@ -74,6 +84,42 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.ViewHo
             complete = itemView.findViewById(R.id.completetaskbtn);
             edit = itemView.findViewById(R.id.edittaskbtn);
             delete = itemView.findViewById(R.id.deletetaskbtn);
+
+            complete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onCompleteClick(position);
+                        }
+                    }
+                }
+            });
+
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onDeleteClick(position);
+                        }
+                    }
+                }
+            });
+
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onEditClick(position);
+                        }
+                    }
+                }
+            });
 
         }
 
@@ -115,3 +161,4 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.ViewHo
         return Color.argb(Color.alpha(color), red, green, blue);
     }
 }
+

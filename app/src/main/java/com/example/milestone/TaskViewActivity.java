@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.amazonaws.amplify.generated.graphql.GetTaskQuery;
 import com.amazonaws.amplify.generated.graphql.ListCoursesQuery;
@@ -34,6 +36,7 @@ public class TaskViewActivity extends AppCompatActivity {
     TaskViewAdapter mAdapter;
     private String dateSent;
     private String username;
+    Button complete;
 
     private ArrayList<ListTasksQuery.Item> mTasks,filteredMTasks;
 
@@ -49,7 +52,43 @@ public class TaskViewActivity extends AppCompatActivity {
         // use a linear layout manager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         // specify an adapter (see also next example)
-        mAdapter = new TaskViewAdapter(this);
+        mAdapter = new TaskViewAdapter(this, new TaskViewAdapter.onItemClickListener() {
+            @Override
+            public void onCompleteClick(int position) {
+                Toast.makeText(TaskViewActivity.this, "Clicked Complete" + position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+                Toast.makeText(TaskViewActivity.this, "Clicked Delete" + position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onEditClick(int position) {
+                Toast.makeText(TaskViewActivity.this, "Clicked Edit" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        complete = findViewById(R.id.completetaskbtn);
+        mAdapter.setOnItemClickListener(new TaskViewAdapter.onItemClickListener(){
+            @Override
+            public void onCompleteClick(int position){
+                Toast.makeText(TaskViewActivity.this, "Clicked Complete" + position, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onDeleteClick(int position){
+                Toast.makeText(TaskViewActivity.this, "Clicked Delete" + position, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onEditClick(int position){
+                Toast.makeText(TaskViewActivity.this, "Clicked Edit" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+
         mRecyclerView.setAdapter(mAdapter);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
