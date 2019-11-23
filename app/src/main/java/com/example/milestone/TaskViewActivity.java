@@ -38,7 +38,7 @@ public class TaskViewActivity extends AppCompatActivity {
     private String username;
     Button complete;
 
-    private ArrayList<ListTasksQuery.Item> mTasks,filteredMTasks;
+    private ArrayList<ListTasksQuery.Item> mTasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +53,11 @@ public class TaskViewActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         // specify an adapter (see also next example)
         mAdapter = new TaskViewAdapter(this, new TaskViewAdapter.onItemClickListener() {
-            @Override
-            public void onCompleteClick(int position) {
-                Toast.makeText(TaskViewActivity.this, "Clicked Complete" + position, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onDeleteClick(int position) {
-                Toast.makeText(TaskViewActivity.this, "Clicked Delete" + position, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onEditClick(int position) {
-                Toast.makeText(TaskViewActivity.this, "Clicked Edit" + position, Toast.LENGTH_SHORT).show();
-            }
+            @Override public void onCompleteClick(int position) {}
+            @Override public void onDeleteClick(int position) {}
+            @Override public void onEditClick(int position) {}
         });
 
-        complete = findViewById(R.id.completetaskbtn);
         mAdapter.setOnItemClickListener(new TaskViewAdapter.onItemClickListener(){
             @Override
             public void onCompleteClick(int position){
@@ -84,10 +72,6 @@ public class TaskViewActivity extends AppCompatActivity {
                 Toast.makeText(TaskViewActivity.this, "Clicked Edit" + position, Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
 
         mRecyclerView.setAdapter(mAdapter);
         ActionBar ab = getSupportActionBar();
