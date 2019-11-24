@@ -59,11 +59,14 @@ public class UpcomingTaskAdapter extends RecyclerView.Adapter<UpcomingTaskAdapte
         }
 
         void bindData(ListTasksQuery.Item item) {
-            txt_classm.setText(item.coursename());
-            txt_classm.setBackgroundColor(Color.parseColor(item.course().color()));
-            txt_classvaluem.setText(item.duedate()+" - "+item.title());
-            txt_classvaluem.setBackgroundColor(Color.parseColor(item.course().color()));
-
+            try {
+                txt_classm.setText(item.coursename());
+                txt_classm.setBackgroundColor(Color.parseColor(item.course().color()));
+                txt_classvaluem.setText(item.duedate()+" - "+item.title());
+                txt_classvaluem.setBackgroundColor(Color.parseColor(item.course().color()));
+            } catch(NullPointerException e){
+                e.printStackTrace();
+            }
         }
     }
 }

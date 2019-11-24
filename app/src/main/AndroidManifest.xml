@@ -15,6 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_milestone"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".EditTaskActivity"></activity>
         <activity
             android:name=".EditCourseActivity"
             android:noHistory="true"
@@ -43,8 +44,8 @@
             android:label="" />
         <activity
             android:name=".AuthenticationActivity"
-            android:noHistory="true"
-            android:label="Milestone">
+            android:label="Milestone"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -47,7 +47,7 @@ public class EditCourseActivity extends AppCompatActivity {
         Intent intent = getIntent();
         cid = intent.getStringExtra("cid");
         cname = intent.getStringExtra("cname");
-        Log.i(TAG,"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"+cid);
+
         EditText cnamebox = ((EditText) findViewById(R.id.editcoursenamebox));
         cnamebox.setText(cname);
         setColorsSpinner();

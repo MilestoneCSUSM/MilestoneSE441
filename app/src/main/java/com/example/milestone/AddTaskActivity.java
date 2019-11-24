@@ -44,6 +44,7 @@ public class AddTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         query();
@@ -96,7 +97,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 public void run() {
                     Toast.makeText(AddTaskActivity.this, "Added task", Toast.LENGTH_SHORT).show();
                     AddTaskActivity.this.finish();
-                    Log.i("Results", "Added Course");
+                    Log.i("Results", "Added Task");
                 }
             });
         }

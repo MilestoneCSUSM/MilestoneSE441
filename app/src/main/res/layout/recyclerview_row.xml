@@ -152,49 +152,43 @@
     <Button
         android:id="@+id/completetaskbtn"
         android:layout_width="124dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="308dp"
-        android:backgroundTint="#2196F3"
-        android:buttonTint="@color/colorPrimaryDark"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="#2196F3"
         android:fontFamily="monospace"
         android:text="Complete"
         android:textColor="#fff"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/edittaskbtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_comments" />
 
     <Button
         android:id="@+id/edittaskbtn"
         android:layout_width="124dp"
-        android:layout_height="44dp"
-        android:backgroundTint="#2196F3"
-        android:buttonTint="@color/colorPrimaryDark"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="6dp"
+        android:background="#2196F3"
         android:fontFamily="monospace"
         android:text="Edit"
         android:textColor="#fff"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/deletetaskbtn"
-        app:layout_constraintHorizontal_bias="0.953"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toEndOf="@+id/completetaskbtn"
+        app:layout_constraintTop_toBottomOf="@+id/txt_commentsvalue" />
 
     <Button
         android:id="@+id/deletetaskbtn"
         android:layout_width="124dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="308dp"
-        android:backgroundTint="#2196F3"
-        android:buttonTint="@color/colorPrimaryDark"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="#2196F3"
         android:fontFamily="monospace"
         android:text="Delete"
         android:textColor="#fff"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.986"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/edittaskbtn"
+        app:layout_constraintTop_toBottomOf="@+id/txt_commentsvalue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

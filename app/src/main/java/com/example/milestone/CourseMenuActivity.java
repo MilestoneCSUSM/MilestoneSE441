@@ -15,7 +15,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.amazonaws.amplify.generated.graphql.DeleteCourseMutation;
+import com.amazonaws.amplify.generated.graphql.DeleteTaskMutation;
+import com.amazonaws.amplify.generated.graphql.GetTaskQuery;
 import com.amazonaws.amplify.generated.graphql.ListCoursesQuery;
+import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
 import com.amazonaws.amplify.generated.graphql.UpdateCourseMutation;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
@@ -29,11 +32,16 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import type.DeleteCourseInput;
+import type.DeleteTaskInput;
+import type.ModelCourseFilterInput;
+import type.ModelStringFilterInput;
+import type.ModelTaskFilterInput;
 
 public class CourseMenuActivity extends AppCompatActivity {
     private Spinner courseSpinner;
     private final String TAG = CourseMenuActivity.class.getSimpleName();
     private ArrayList<ListCoursesQuery.Item> mCourses;
+    private ArrayList<ListTasksQuery.Item> mTasks;
     private List<ListCoursesQuery.Item> mcData = new ArrayList<>();
     private String cid,cname;
 
@@ -74,11 +82,14 @@ public class CourseMenuActivity extends AppCompatActivity {
         deletecoursebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cid = getCourseID();
+                cname = getCourseName();
                 delete();
+                cleanUpTasks();
                 query();
             }
         });
-
+        getTasks();
     }
 
     public String getCourseID(){
@@ -89,6 +100,7 @@ public class CourseMenuActivity extends AppCompatActivity {
 
     public String getCourseName(){
         int spinnerindex = courseSpinner.getSelectedItemPosition();
+        Log.i(TAG, "COURSE Name: " + mcData.get(spinnerindex).coursename().toString());
         return mcData.get(spinnerindex).coursename();
     }
 
@@ -99,12 +111,62 @@ public class CourseMenuActivity extends AppCompatActivity {
     }
 
     public void delete(){
-        cid = getCourseID();
         DeleteCourseInput delCourse = DeleteCourseInput.builder().id(cid).build();
         DeleteCourseMutation delCourseMut = DeleteCourseMutation.builder().input(delCourse).build();
 
         ClientFactory.appSyncClient().mutate(delCourseMut).enqueue(mutationCallback);
+
     }
+
+
+    public void getTasks(){
+        Log.i(TAG, "COURSE Name GetTasks: " + cname);
+        //ModelStringFilterInput msfi = ModelStringFilterInput.builder().eq(cname).build();
+        //ModelTaskFilterInput mtfi = ModelTaskFilterInput.builder().coursename(msfi).build();
+
+        ClientFactory.appSyncClient().query(ListTasksQuery.builder().build())
+                .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
+                .enqueue(taskIdCallback);
+    }
+
+    public void cleanUpTasks() {
+        for(int i = 0; i< mTasks.size();i++){
+            if(cid.equals(mTasks.get(i).course().id())){
+                Log.i(TAG, "COMPARE: from cleansup " + cid + mTasks.get(i).id());
+                DeleteTaskInput dti = DeleteTaskInput.builder().id(mTasks.get(i).id().toString()).build();
+                DeleteTaskMutation dtm = DeleteTaskMutation.builder().input(dti).build();
+
+                ClientFactory.appSyncClient().mutate(dtm).enqueue(cleanTasksMutationCallback);
+            }
+        }
+
+    }
+
+    private GraphQLCall.Callback<DeleteTaskMutation.Data> cleanTasksMutationCallback = new GraphQLCall.Callback<DeleteTaskMutation.Data>() {
+        @Override
+        public void onResponse(@Nonnull final Response<DeleteTaskMutation.Data> response) {
+            Log.i("Results", "Cleaned up Task");
+        }
+
+        @Override
+        public void onFailure(@Nonnull final ApolloException e) {
+            Log.e("", "Failed to perform task cleanup", e);
+        }
+    };
+
+    private GraphQLCall.Callback<ListTasksQuery.Data> taskIdCallback = new GraphQLCall.Callback<ListTasksQuery.Data>() {
+        @Override
+        public void onResponse(@Nonnull Response<ListTasksQuery.Data> response) {
+            mTasks = new ArrayList<>(response.data().listTasks().items());
+            Log.i(TAG, "tasksbydate" + mTasks.toString());
+        }
+
+        @Override
+        public void onFailure(@Nonnull ApolloException e) {
+            Log.e(TAG, e.toString());
+
+        }
+    };
 
     private GraphQLCall.Callback<DeleteCourseMutation.Data> mutationCallback = new GraphQLCall.Callback<DeleteCourseMutation.Data>() {
         @Override
@@ -114,7 +176,7 @@ public class CourseMenuActivity extends AppCompatActivity {
                 public void run() {
                     Log.i("Results", "Deleted Course");
                     Toast.makeText(CourseMenuActivity.this, "Deleted Course", Toast.LENGTH_SHORT).show();
-                    CourseMenuActivity.this.finish();
+                    //CourseMenuActivity.this.finish();
                 }
             });
         }
@@ -158,6 +220,7 @@ public class CourseMenuActivity extends AppCompatActivity {
         mcData = items;
         addItemsToSpinner();
     }
+
 
     public void addItemsToSpinner() {
         courseSpinner = (Spinner) findViewById(R.id.courseSpinner);
