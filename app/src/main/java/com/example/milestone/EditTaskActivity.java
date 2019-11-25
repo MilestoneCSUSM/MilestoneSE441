@@ -179,12 +179,9 @@ public class EditTaskActivity extends AppCompatActivity {
                 Log.i(TAG, "tasks clicked");
                 return(true);
             case R.id.signOut:
-                Intent signOutIntent = new Intent(EditTaskActivity.this,AuthenticationActivity.class);
-                startActivity(signOutIntent);
-                EditTaskActivity.this.finish();
                 AWSMobileClient.getInstance().signOut();
-                finish();
-                //System.exit(0);
+                Intent signOutIntent = new Intent(EditTaskActivity.this,AuthenticationActivity.class);
+                EditTaskActivity.this.finish();
                 startActivity(signOutIntent);
                 Log.i(TAG, "logout clicked");
                 return(true);

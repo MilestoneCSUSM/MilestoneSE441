@@ -2,10 +2,11 @@
 query GetUserData($id: ID!) {
   getUserData(id: $id) {
     id
+    username
     schoolname
-    email
     birthday
     grade
+    subscriptions
   }
 }
 query ListUserDatas(
@@ -16,10 +17,11 @@ query ListUserDatas(
   listUserDatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      username
       schoolname
-      email
       birthday
       grade
+      subscriptions
     }
     nextToken
   }
@@ -115,5 +117,32 @@ query ListTasks(
       completed
     }
     nextToken
+  }
+}
+query SearchCourses(
+  $filter: SearchableCourseFilterInput
+  $sort: SearchableCourseSortInput
+  $limit: Int
+  $nextToken: String
+) {
+  searchCourses(
+    filter: $filter
+    sort: $sort
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      coursename
+      instructor
+      color
+      meetingdays
+      author
+      tasks {
+        nextToken
+      }
+    }
+    nextToken
+    total
   }
 }

@@ -2,28 +2,31 @@
 subscription OnCreateUserData {
   onCreateUserData {
     id
+    username
     schoolname
-    email
     birthday
     grade
+    subscriptions
   }
 }
 subscription OnUpdateUserData {
   onUpdateUserData {
     id
+    username
     schoolname
-    email
     birthday
     grade
+    subscriptions
   }
 }
 subscription OnDeleteUserData {
   onDeleteUserData {
     id
+    username
     schoolname
-    email
     birthday
     grade
+    subscriptions
   }
 }
 subscription OnCreateCourse {

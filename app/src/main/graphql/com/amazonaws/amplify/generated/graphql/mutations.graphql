@@ -2,28 +2,31 @@
 mutation CreateUserData($input: CreateUserDataInput!) {
   createUserData(input: $input) {
     id
+    username
     schoolname
-    email
     birthday
     grade
+    subscriptions
   }
 }
 mutation UpdateUserData($input: UpdateUserDataInput!) {
   updateUserData(input: $input) {
     id
+    username
     schoolname
-    email
     birthday
     grade
+    subscriptions
   }
 }
 mutation DeleteUserData($input: DeleteUserDataInput!) {
   deleteUserData(input: $input) {
     id
+    username
     schoolname
-    email
     birthday
     grade
+    subscriptions
   }
 }
 mutation CreateCourse($input: CreateCourseInput!) {

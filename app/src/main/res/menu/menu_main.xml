@@ -24,9 +24,9 @@
         android:title="Home"
         app:showAsAction="always" />
     <item
-        android:id="@+id/signOut"
+        android:id="@+id/profile"
         android:orderInCategory="100"
-        android:title="Log Out"
+        android:title="Profile"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/searchSubs"
@@ -34,8 +34,8 @@
         android:title="Search Subscriptions"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/manageSubs"
+        android:id="@+id/signOut"
         android:orderInCategory="100"
-        android:title="Manage Subscriptions"
+        android:title="Log Out"
         app:showAsAction="ifRoom" />
 </menu>

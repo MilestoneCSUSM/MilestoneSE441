@@ -15,7 +15,15 @@
         android:roundIcon="@mipmap/ic_launcher_milestone"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditTaskActivity"></activity>
+        <activity android:name=".SubscriptionsActivity"></activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:noHistory="true"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".EditTaskActivity"
+            android:noHistory="true"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".EditCourseActivity"
             android:noHistory="true"

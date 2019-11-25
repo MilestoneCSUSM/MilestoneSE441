@@ -121,41 +121,6 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    /*
-    @Override
-    protected void onResume(){
-        super.onResume();
-        Date today = new Date();
-        Calendar sixmonths = Calendar.getInstance();
-        sixmonths.add(Calendar.MONTH, 6);
-
-        CalendarPickerView datePicker = findViewById(R.id.calendar);
-        datePicker.init(today,sixmonths.getTime()).withSelectedDate(today);
-
-        DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy");
-        String date = df.format(Calendar.getInstance().getTime());
-        TextView mdy = (TextView) findViewById(R.id.dateDisplay);
-        mdy.setText(date);
-
-        datePicker.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
-            @Override
-            public void onDateSelected(Date date) {
-                Calendar calSelected = Calendar.getInstance();
-                calSelected.setTime(date);
-                String selecetedDate = "" + (calSelected.get(Calendar.MONTH)+1) + "/"
-                        + calSelected.get(Calendar.DAY_OF_MONTH) + "/" + calSelected.get(Calendar.YEAR);
-                Intent acintent = new Intent(MainActivity.this, TaskViewActivity.class);
-                acintent.putExtra("date",selecetedDate);
-                startActivity(acintent);
-            }
-
-            @Override
-            public void onDateUnselected(Date date) {
-
-            }
-        });
-    }
-    */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -166,27 +131,35 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-        case R.id.toHome:
-            setContentView(R.layout.activity_main);
-            Log.i(TAG, "home clicked");
-            return(true);
-        case R.id.courses:
-            Intent courseIntent = new Intent(MainActivity.this,CourseMenuActivity.class);
-            startActivity(courseIntent);
-            Log.i(TAG, "courses clicked");
-            return(true);
-        case R.id.tasks:
-            Intent taskIntent = new Intent(MainActivity.this,AddTaskActivity.class);
-            startActivity(taskIntent);
-            Log.i(TAG, "tasks clicked");
-            return(true);
-        case R.id.signOut:
-            AWSMobileClient.getInstance().signOut();
-            Log.i(TAG, "logout clicked");
-            finish();
+            case R.id.searchSubs:
+                Intent subscriptionsIntent = new Intent(MainActivity.this,SubscriptionsActivity.class);
+                startActivity(subscriptionsIntent);
+            case R.id.profile:
+                Intent profileIntent = new Intent(MainActivity.this,ProfileActivity.class);
+                startActivity(profileIntent);
+                return true;
+            case R.id.toHome:
+                setContentView(R.layout.activity_main);
+                Log.i(TAG, "home clicked");
+                return(true);
+            case R.id.courses:
+                Intent courseIntent = new Intent(MainActivity.this,CourseMenuActivity.class);
+                startActivity(courseIntent);
+                Log.i(TAG, "courses clicked");
+                return(true);
+            case R.id.tasks:
+                Intent taskIntent = new Intent(MainActivity.this,AddTaskActivity.class);
+                startActivity(taskIntent);
+                Log.i(TAG, "tasks clicked");
+                return(true);
+            case R.id.signOut:
+                AWSMobileClient.getInstance().signOut();
+                Intent signOutIntent = new Intent(MainActivity.this,AuthenticationActivity.class);
+                MainActivity.this.finish();
+                startActivity(signOutIntent);
+                Log.i(TAG, "logout clicked");
+                return(true);
 
-            System.exit(0);
-            return(true);
     }
         return(super.onOptionsItemSelected(item));
     }

@@ -1,12 +1,13 @@
 type UserData @model {
   id: ID!
-  schoolname: String!
-  email:String!
-  birthday: String!
-  grade: Int!
+  username: String!
+  schoolname: String
+  birthday: String
+  grade: String
+  subscriptions: [String]
 }
 
-type Course @model {
+type Course @model @searchable {
   id: ID!
   coursename: String!
   instructor: String!

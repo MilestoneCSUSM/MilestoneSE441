@@ -176,7 +176,6 @@
         android:buttonTint="@color/colorPrimaryDark"
         android:fontFamily="monospace"
         android:text="Add Task"
-
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
