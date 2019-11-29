@@ -149,6 +149,7 @@ public class UserDataController {
     }
 
     public static String getSubbedCourses(){
+
         String thesubs = getFirstSubbedCourse() + getSecondSubbedCourse() + getThirdSubbedCourse();
         return thesubs;
     }

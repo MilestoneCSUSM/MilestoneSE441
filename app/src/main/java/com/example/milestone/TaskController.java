@@ -30,7 +30,6 @@ public class TaskController {
 
     private static final String TAG = TaskController.class.getSimpleName();
     private static TaskController taskInstance;
-    private static ArrayList<String> authorNames;
     private static ArrayList<ListTasksQuery.Item> theTasks;
     private static ArrayList<ListTasksQuery.Item> tasks;
 
@@ -54,22 +53,30 @@ public class TaskController {
     }
 
     public static ArrayList<ListTasksQuery.Item> getTheTasks(){
-        return theTasks;
+        return tasks;
     }
 
-    public static void removeTask(int position){
-        theTasks.remove(position);
+    public static void removeTask(String id){
+        for(int i = 0; i < tasks.size(); i++){
+            if(tasks.get(i).id().equals(id)){
+                tasks.remove(i);
+                break;
+            }
+        }
+
+
     }
 
-    public static void queryForTasks(String username){
-        ModelStringFilterInput msfi = ModelStringFilterInput.builder().eq(username).build();
-        ModelTaskFilterInput mtfi = ModelTaskFilterInput.builder().author(msfi).build();
+    /*
+    public static void queryForTasks(String username, String dateSent){
+        ModelStringFilterInput msfi = ModelStringFilterInput.builder().eq(username).eq(dateSent).build();
+        ModelTaskFilterInput mtfi = ModelTaskFilterInput.builder().author(msfi).duedate(msfi).build();
 
         ClientFactory.appSyncClient().query(ListTasksQuery.builder().filter(mtfi).build())
                 .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
                 .enqueue(queryCallback);
     }
-
+    */
     public static void queryForAllTasks(){
         ClientFactory.appSyncClient().query(ListTasksQuery.builder().build())
                 .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
@@ -79,22 +86,13 @@ public class TaskController {
 
     public static ArrayList<ListTasksQuery.Item> filterTasksByDate(String dateSent, String username){
         ArrayList<ListTasksQuery.Item> tasksByDate = new ArrayList<>();
-        for(int i = 0; i < theTasks.size(); i++){
-            if(theTasks.get(i).duedate().equals(dateSent) && theTasks.get(i).author().equals(username)){
-                tasksByDate.add(theTasks.get(i));
+        for(int i = 0; i < tasks.size(); i++){
+            if(tasks.get(i).duedate().equals(dateSent) && tasks.get(i).author().equals(username)){
+                tasksByDate.add(tasks.get(i));
             }
         }
+        Log.i(TAG, "TASKS BY DATE:::::::::::::::::::::" + tasksByDate.toString());
         return tasksByDate;
-    }
-
-    public static ArrayList<ListTasksQuery.Item> filterTasksByComplete(){
-        ArrayList<ListTasksQuery.Item> tasksByComplete = new ArrayList<>();
-        for(int i = 0; i < theTasks.size();i++){
-            if(!theTasks.get(i).completed()){
-                tasksByComplete.add(theTasks.get(i));
-            }
-        }
-        return tasksByComplete;
     }
 
     public static ArrayList<ListTasksQuery.Item> filterTasks(String courseIds, String username){

@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.amazonaws.amplify.generated.graphql.ListCoursesQuery;
 import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
 import com.amazonaws.mobile.client.AWSMobileClient;
+import com.amazonaws.mobile.client.Callback;
+import com.amazonaws.mobile.client.SignOutOptions;
 import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
 import com.apollographql.apollo.GraphQLCall;
 import com.apollographql.apollo.api.Response;
@@ -43,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     UpcomingTaskAdapter mAdapter;
     private String currDate;
-    CourseController cc;
-    UserDataController udc;
     private ArrayList<ListTasksQuery.Item> mTasks;
 
     static {
@@ -52,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         TaskController.getInstance();
         UserDataController.getInstance();
         UserDataController.setUsername(AWSMobileClient.getInstance().getUsername());
+        try{
+            UserDataController.setUserDetails();
+        } catch(NullPointerException e){
+            e.printStackTrace();
+        }
         TaskController.queryForAllTasks();
     }
 
@@ -60,13 +65,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ClientFactory.init(this);
-        UserDataController.setUserDetails();
+        //UserDataController.setUserDetails();
         //Setting up the Upcoming Tasks recycler view.
         mRecyclerView = findViewById(R.id.mainrecyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new UpcomingTaskAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
-
 
         //Setting the time at the top of view
         LocalDateTime ldt = LocalDateTime.now();
@@ -74,6 +78,16 @@ public class MainActivity extends AppCompatActivity {
         currDate = ldt.format(dtf).toString();
         Log.i(TAG, "Current Date: " + currDate);
         datePicker = (CalendarView) findViewById(R.id.calendar);
+
+        try {
+            UserDataController.setUserDetails();
+            mTasks = TaskController.filterTasks(UserDataController.getSubbedCourses(),UserDataController.getUsername());
+            mTasks = TaskController.filterTasksByDateGTE(mTasks,currDate);
+            mAdapter.setItems(mTasks);
+            mAdapter.notifyDataSetChanged();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         //Setting the date at the top of view
         DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy");
@@ -100,6 +114,29 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable(){
             public void run(){
                 try{
+                    //TaskController.queryForAllTasks();
+                    if(UserDataController.getSubsSize()>0){
+                        mTasks = TaskController.filterTasks(UserDataController.getSubbedCourses(),UserDataController.getUsername());
+                        Log.i(TAG,"mTasks after filter by CID ------------" +mTasks.toString());
+                        mTasks = TaskController.filterTasksByDateGTE(mTasks,currDate);
+                        Log.i(TAG,"mTasks after filter by DATE ------------" +mTasks.toString());
+                        mAdapter.setItems(mTasks);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                } catch (NullPointerException e){
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        runOnUiThread(new Runnable(){
+            public void run(){
+                try{
+                    TaskController.queryForAllTasks();
                     if(UserDataController.getSubsSize()>0){
                         mTasks = TaskController.filterTasks(UserDataController.getSubbedCourses(),UserDataController.getUsername());
                         Log.i(TAG,"mTasks after filter by CID ------------" +mTasks.toString());
@@ -121,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -149,10 +187,21 @@ public class MainActivity extends AppCompatActivity {
                 Log.i(TAG, "tasks clicked");
                 return(true);
             case R.id.signOut:
-                AWSMobileClient.getInstance().signOut();
-                Intent signOutIntent = new Intent(MainActivity.this,AuthenticationActivity.class);
-                MainActivity.this.finish();
-                startActivity(signOutIntent);
+                AWSMobileClient.getInstance().signOut(SignOutOptions.builder().signOutGlobally(true).build(), new Callback<Void>() {
+                    @Override
+                    public void onResult(Void result) {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+                //AWSMobileClient.getInstance().signOut();
+                //Intent signOutIntent = new Intent(MainActivity.this,AuthenticationActivity.class);
+                //MainActivity.this.finish();
+                //startActivity(signOutIntent);
                 Log.i(TAG, "logout clicked");
                 return(true);
 

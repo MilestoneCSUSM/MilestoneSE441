@@ -30,7 +30,7 @@ public class AuthenticationActivity extends AppCompatActivity {
                 switch (userStateDetails.getUserState()){
                     case SIGNED_IN:
                         Intent i = new Intent(AuthenticationActivity.this, MainActivity.class);
-                        TaskController.queryForTasks(AWSMobileClient.getInstance().getUsername());
+                        //TaskController.queryForAllTasks();
                         startActivity(i);
                         break;
                     case SIGNED_OUT:

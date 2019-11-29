@@ -62,64 +62,13 @@ public class TaskViewActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-
-        mAdapter.setItems(TaskController.filterTasksByDate(dateSent, username));
+        //TaskController.queryForTasks(username,dateSent);
+        mTasks = TaskController.filterTasksByDate(dateSent, username);
+        mAdapter.setItems(mTasks);
         mAdapter.notifyDataSetChanged();
-        mTasks = TaskController.getTheTasks();
 
-        //TRYING TO MAKE THIS WORK WITH TASK CONTROLLER
-        /*
-        //Tries to query, catches exception if no results provided
-        try {
-            query();
-        } catch (NullPointerException e){
-            e.printStackTrace();
-        }
-        //query();
-        */
-    }
-
-   /*
-    @Override
-    public void onResume(){
-        super.onResume();
-        query();
-    }
-
-    public void query(){
-        ModelStringFilterInput msfi = ModelStringFilterInput.builder().eq(username).eq(dateSent).build();
-        ModelTaskFilterInput mtfi = ModelTaskFilterInput.builder().duedate(msfi).build();
-
-        ClientFactory.appSyncClient().query(ListTasksQuery.builder().filter(mtfi).build())
-                .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
-                .enqueue(queryCallback);
 
     }
-
-    private GraphQLCall.Callback<ListTasksQuery.Data> queryCallback = new GraphQLCall.Callback<ListTasksQuery.Data>() {
-        @Override
-        public void onResponse(@Nonnull Response<ListTasksQuery.Data> response) {
-            mTasks = new ArrayList<>(response.data().listTasks().items());
-            runOnUiThread(new Runnable(){
-                public void run(){
-                    if(mTasks.size() <= 0){
-                        Toast.makeText(TaskViewActivity.this, "No Tasks to Display!", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        mAdapter.setItems(mTasks);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                }
-            });
-        }
-
-        @Override
-        public void onFailure(@Nonnull ApolloException e) {
-            Log.e(TAG, e.toString());
-
-        }
-    };
-    */
 
     public void buildAdapterButtons(){
         mAdapter = new TaskViewAdapter(this, new TaskViewAdapter.onItemClickListener() {
@@ -169,7 +118,7 @@ public class TaskViewActivity extends AppCompatActivity {
 
     public void runDeleteMutation(int position){
         String taskId = mTasks.get(position).id();
-
+        TaskController.removeTask(taskId);
         DeleteTaskInput dti = DeleteTaskInput.builder().id(taskId).build();
 
         DeleteTaskMutation dtm = DeleteTaskMutation.builder().input(dti).build();
