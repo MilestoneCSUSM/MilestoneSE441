@@ -13,21 +13,6 @@
     android:background="#edf1fe"
     tools:context=".AddTaskActivity">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:text="Tasks"
-        android:textSize="18sp"
-        android:textStyle="bold"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
-
-
     <Spinner
         android:id="@+id/taskCourseSpinner"
         android:layout_width="330dp"
@@ -35,9 +20,10 @@
         android:background="@drawable/shapes"
         app:layout_constraintBottom_toTopOf="@+id/addtaskbtn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.118" />
+        app:layout_constraintVertical_bias="0.025" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tasktitle"
@@ -46,16 +32,8 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/shapes"
         android:gravity="center"
-        android:hint="Task Title"
+        android:hint="@string/tasktitle"
         android:visibility="visible"
-        app:boxBackgroundMode="outline"
-        app:boxCornerRadiusBottomEnd="2dp"
-        app:boxCornerRadiusBottomStart="2dp"
-        app:boxCornerRadiusTopEnd="2dp"
-        app:boxCornerRadiusTopStart="2dp"
-        app:boxStrokeColor="#2196F3"
-
-        app:boxStrokeWidth="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskCourseSpinner">
@@ -78,7 +56,6 @@
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
         android:maxDate="01/01/2030"
-
         android:startYear="2019"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.481"
@@ -113,15 +90,8 @@
         android:inputType="numberDecimal"
         android:digits="0123456789."
         android:gravity="center"
-        android:hint="Percentage"
+        android:hint="@string/percentageholder"
         android:visibility="visible"
-        app:boxBackgroundMode="outline"
-        app:boxCornerRadiusBottomEnd="2dp"
-        app:boxCornerRadiusBottomStart="2dp"
-        app:boxCornerRadiusTopEnd="2dp"
-        app:boxCornerRadiusTopStart="2dp"
-        app:boxStrokeColor="#2196F3"
-        app:boxStrokeWidth="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,16 +113,8 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/shapes"
         android:gravity="center"
-        android:hint="Comments (Max 255 Characters)"
+        android:hint="@string/commentshint"
         android:visibility="visible"
-        app:boxBackgroundMode="outline"
-        app:boxCornerRadiusBottomEnd="2dp"
-        app:boxCornerRadiusBottomStart="2dp"
-        app:boxCornerRadiusTopEnd="2dp"
-        app:boxCornerRadiusTopStart="2dp"
-        app:boxStrokeColor="#2196F3"
-
-        app:boxStrokeWidth="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
@@ -171,16 +133,16 @@
         android:id="@+id/addtaskbtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="584dp"
+        android:layout_marginTop="48dp"
         android:backgroundTint="#2196F3"
         android:buttonTint="@color/colorPrimaryDark"
         android:fontFamily="monospace"
-        android:text="Add Task"
+        android:text="@string/addtask"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/taskcomments" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amazonaws.amplify.generated.graphql.ListCoursesQuery;
 import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
 
 import java.util.ArrayList;
@@ -34,7 +35,6 @@ public class UpcomingTaskAdapter extends RecyclerView.Adapter<UpcomingTaskAdapte
         holder.bindData(mData.get(position));
     }
 
-    // total number of rows
     @Override
     public int getItemCount() {
         return mData.size();

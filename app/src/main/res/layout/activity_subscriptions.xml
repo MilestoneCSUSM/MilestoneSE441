@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shapes"
-            android:hint="Search..." />
+            android:hint="@string/searchtext" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

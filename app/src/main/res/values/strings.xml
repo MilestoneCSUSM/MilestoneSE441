@@ -1,4 +1,58 @@
 <resources>
     <string name="app_name">Milestone</string>
     <string name="action_settings">Settings</string>
+
+    <string name="meetingdays">Meeting Days</string>
+    <string name="Sunday">Sunday</string>
+    <string name="Monday">Monday</string>
+    <string name="Tuesday">Tuesday</string>
+    <string name="Wednesday">Wednesday</string>
+    <string name="Thursday">Thursday</string>
+    <string name="Friday">Friday</string>
+    <string name="Saturday">Saturday</string>
+
+    <string name="upcomingtasks">Upcoming Tasks</string>
+
+    <string name="classholder">Class</string>
+    <string name="priorityholder">Priority</string>
+    <string name="percentageholder">Percentage</string>
+    <string name="titleholder">Title</string>
+    <string name="commentsholder">Comments</string>
+    <string name="commentshint">Comments (Max 255 Characters)</string>
+    <string name="course">Course</string>
+    <string name="coursedescriptionplaceholder"><br />
+        <br>Instructor: An Instructor </br><br>Meeting Days: Some Meeting Days </br><br>Author: An Author </br></string>
+    <string name="coursemenu">Course Menu</string>
+    <string name="editacourse">Editing a Course</string>
+    <string name="editcourse">Edit Course</string>
+    <string name="updatecourse">Update Course</string>
+    <string name="deleteacourse">Delete a Course</string>
+    <string name="deletecourse">Delete Course</string>
+    <string name="coursename">Course Name</string>
+    <string name="coursecolor">Course Color</string>
+    <string name="addcourse">Add Course</string>
+    <string name="instructorname">Instructor Name</string>
+    <string name="task">Tasks</string>
+    <string name="tasktitle">Task Title</string>
+    <string name="addtask">Add Task</string>
+    <string name="edittask">Edit Task</string>
+    <string name="taskdescriptionplaceholder">Task Description Placeholder Text</string>
+    <string name="updatetask">Update Task</string>
+    <string name="complete">Complete</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+
+    <string name="baselineprofilename">User\'s Profile Name</string>
+    <string name="csusmlogo">csusmlogo</string>
+    <string name="birthday">Birthday</string>
+    <string name="subscriptions">Subscriptions</string>
+    <string name="updateprofile">Update Profile</string>
+
+    <string name="subscribe">Subscribe</string>
+
+    <string name="searchtext">Search..</string>
+
+
+
+
 </resources>

@@ -38,7 +38,7 @@ public class SubscriptionsAdapter extends RecyclerView.Adapter<SubscriptionsAdap
     }
 
     @Override
-    public void onBindViewHolder(SubscriptionsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bindData(mData.get(position));
     }
 
@@ -57,7 +57,7 @@ public class SubscriptionsAdapter extends RecyclerView.Adapter<SubscriptionsAdap
         TextView txt_classvaluesubs;
         Button subscribebtn;
 
-        public ViewHolder(View itemView, final SubscriptionsAdapter.onItemClickListener listener) {
+        public ViewHolder(View itemView, final onItemClickListener listener) {
             super(itemView);
             txt_classsubs = itemView.findViewById(R.id.txt_classsubs);
             txt_classvaluesubs = itemView.findViewById(R.id.txt_classvaluesubs);
@@ -83,7 +83,9 @@ public class SubscriptionsAdapter extends RecyclerView.Adapter<SubscriptionsAdap
                 String author = item.author();
                 String instructor = item.instructor();
                 String meetingDays = item.meetingdays();
-                String description = instructor + "/n" + meetingDays + "/n" + author;
+                String description = "Instructor: " + instructor + "\n"
+                        + "Meeting Days: " + meetingDays + "\n"
+                        + "Author: " + author;
                 txt_classvaluesubs.setText(description);
                 txt_classvaluesubs.setBackgroundColor(Color.parseColor(item.color()));
             } catch (NullPointerException e){

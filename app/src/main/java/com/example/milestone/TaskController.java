@@ -1,0 +1,197 @@
+package com.example.milestone;
+
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.amazonaws.amplify.generated.graphql.CreateTaskMutation;
+import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
+import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
+import com.apollographql.apollo.GraphQLCall;
+import com.apollographql.apollo.api.Response;
+import com.apollographql.apollo.exception.ApolloException;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.UUID;
+
+import javax.annotation.Nonnull;
+
+import type.CreateTaskInput;
+import type.ModelCourseFilterInput;
+import type.ModelStringFilterInput;
+import type.ModelTaskFilterInput;
+
+public class TaskController {
+
+    private static final String TAG = TaskController.class.getSimpleName();
+    private static TaskController taskInstance;
+    private static ArrayList<String> authorNames;
+    private static ArrayList<ListTasksQuery.Item> theTasks;
+    private static ArrayList<ListTasksQuery.Item> tasks;
+
+    private TaskController(){
+        theTasks = new ArrayList<>();
+    }
+
+    public static TaskController getInstance(){
+        if(taskInstance == null){
+            synchronized (TaskController.class){
+                if(taskInstance == null){
+                    taskInstance = new TaskController();
+                }
+            }
+        }
+        return taskInstance;
+    }
+
+    public static void setTasks(ArrayList<ListTasksQuery.Item> theTaskList){
+        theTasks = theTaskList;
+    }
+
+    public static ArrayList<ListTasksQuery.Item> getTheTasks(){
+        return theTasks;
+    }
+
+    public static void removeTask(int position){
+        theTasks.remove(position);
+    }
+
+    public static void queryForTasks(String username){
+        ModelStringFilterInput msfi = ModelStringFilterInput.builder().eq(username).build();
+        ModelTaskFilterInput mtfi = ModelTaskFilterInput.builder().author(msfi).build();
+
+        ClientFactory.appSyncClient().query(ListTasksQuery.builder().filter(mtfi).build())
+                .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
+                .enqueue(queryCallback);
+    }
+
+    public static void queryForAllTasks(){
+        ClientFactory.appSyncClient().query(ListTasksQuery.builder().build())
+                .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
+                .enqueue(qQueryCallback);
+    }
+
+
+    public static ArrayList<ListTasksQuery.Item> filterTasksByDate(String dateSent){
+        ArrayList<ListTasksQuery.Item> tasksByDate = new ArrayList<>();
+        for(int i = 0; i < theTasks.size(); i++){
+            if(theTasks.get(i).duedate().equals(dateSent)){
+                tasksByDate.add(theTasks.get(i));
+            }
+        }
+        return tasksByDate;
+    }
+
+    public static ArrayList<ListTasksQuery.Item> filterTasksByComplete(){
+        ArrayList<ListTasksQuery.Item> tasksByComplete = new ArrayList<>();
+        for(int i = 0; i < theTasks.size();i++){
+            if(!theTasks.get(i).completed()){
+                tasksByComplete.add(theTasks.get(i));
+            }
+        }
+        return tasksByComplete;
+    }
+
+    public static ArrayList<ListTasksQuery.Item> filterTasks(String courseIds, String username){
+        ArrayList<ListTasksQuery.Item> taskList = new ArrayList<>();
+
+        for(int i = 0; i < tasks.size();i++){
+            if(tasks.get(i).course().id().contains(courseIds) || tasks.get(i).author().equals(username)){
+                taskList.add(tasks.get(i));
+                Log.i(TAG,"ADDED A FILTERED TASK ------------" +tasks.get(i).toString());
+            }
+        }
+        return taskList;
+    }
+
+    public static void addATask(String cname, String title, String date, String prio, String cmnts, double percent, String cid){
+        final String id = UUID.randomUUID().toString();
+        final boolean completed = false;
+        CreateTaskInput createTaskInput = CreateTaskInput.builder().
+                id(id).
+                author(UserDataController.getUsername()).
+                coursename(cname).
+                title(title).
+                duedate(date).
+                priority(prio).
+                percentage(percent).
+                comments(cmnts).
+                completed(completed).
+                taskCourseId(cid).build();
+
+        CreateTaskMutation addTaskMutation = CreateTaskMutation.builder()
+                .input(createTaskInput)
+                .build();
+
+        ClientFactory.appSyncClient().mutate(addTaskMutation).enqueue(mutationCallback);
+
+    }
+
+    public static ArrayList<ListTasksQuery.Item> filterTasksByDateGTE(ArrayList<ListTasksQuery.Item> theTasks, String dateSent){
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        ArrayList<ListTasksQuery.Item> tasksByDate = new ArrayList<>();
+        try {
+            Date dateToCompare = sdf.parse(dateSent);
+            for(int i = 0; i < theTasks.size();i++){
+                Date taskDate = sdf.parse(theTasks.get(i).duedate());
+                if(taskDate.equals(dateToCompare)){
+                    tasksByDate.add(theTasks.get(i));
+                    Log.i(TAG,"ADDED A FILTERED BY DATE TASK ------------" +theTasks.get(i).toString());
+                }
+                else if(taskDate.after(dateToCompare)){
+                    tasksByDate.add(theTasks.get(i));
+                    Log.i(TAG,"ADDED A FILTERED BY DATE TASK ------------" +theTasks.get(i).toString());
+                }
+            }
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
+        return tasksByDate;
+    }
+
+    private static GraphQLCall.Callback<ListTasksQuery.Data> queryCallback = new GraphQLCall.Callback<ListTasksQuery.Data>() {
+        @Override
+        public void onResponse(@Nonnull Response<ListTasksQuery.Data> response) {
+            theTasks = new ArrayList<>(response.data().listTasks().items());
+            Log.i(TAG, "TASKS FROM INSIDE CONTROLLER:::::::::::" + theTasks.toString());
+
+        }
+
+        @Override
+        public void onFailure(@Nonnull ApolloException e) {
+            Log.e(TAG, e.toString());
+
+        }
+    };
+
+    private static GraphQLCall.Callback<ListTasksQuery.Data> qQueryCallback = new GraphQLCall.Callback<ListTasksQuery.Data>() {
+        @Override
+        public void onResponse(@Nonnull Response<ListTasksQuery.Data> response) {
+            tasks = new ArrayList<>(response.data().listTasks().items());
+            Log.i(TAG, "trying to query all the tasks:::::::::::::::::::::::::::::::::::::::" + theTasks.toString());
+
+        }
+
+        @Override
+        public void onFailure(@Nonnull ApolloException e) {
+            Log.e(TAG, e.toString());
+
+        }
+    };
+
+    private static GraphQLCall.Callback<CreateTaskMutation.Data> mutationCallback = new GraphQLCall.Callback<CreateTaskMutation.Data>() {
+        @Override
+        public void onResponse(@Nonnull final Response<CreateTaskMutation.Data> response) {
+        }
+
+        @Override
+        public void onFailure(@Nonnull final ApolloException e) {
+        }
+    };
+
+}

@@ -1,13 +1,14 @@
 type UserData @model {
   id: ID!
   username: String!
-  schoolname: String
-  birthday: String
-  grade: String
-  subscriptions: [String]
+  schoolname: String!
+  birthday: String!
+  grade: String!
+  subscriptions: [String]!
+  firstVisit: Boolean!
 }
 
-type Course @model @searchable {
+type Course @model {
   id: ID!
   coursename: String!
   instructor: String!
@@ -19,6 +20,7 @@ type Course @model @searchable {
 
 type Task @model {
   id: ID!
+  author: String!
   course: Course @connection(name: "CourseTasks")
   coursename: String!
   title: String!

@@ -13,29 +13,15 @@
     android:background="#edf1fe"
     tools:context=".CourseMenuActivity">
 
-    <TextView
-        android:id="@+id/etextView"
-        android:layout_width="413dp"
-        android:layout_height="56dp"
-        android:fontFamily="monospace"
-        android:text="Edit Course"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:textStyle="bold"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.001" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etextInputLayout"
         android:layout_width="331dp"
         android:layout_height="69dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/shapes"
         android:gravity="center"
-        android:hint="Course Name"
+        android:hint="@string/coursename"
         android:visibility="visible"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusBottomEnd="2dp"
@@ -46,7 +32,7 @@
         app:boxStrokeWidth="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etextView">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -54,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:maxLength="30"
-            android:singleLine="true"/>
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -64,7 +50,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/shapes"
         android:gravity="center"
-        android:hint="Instructor Name"
+        android:hint="@string/instructorname"
         android:visibility="visible"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusBottomEnd="2dp"
@@ -92,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="monospace"
-        android:text="Meeting Days"
+        android:text="@string/meetingdays"
         android:textAlignment="textStart"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -106,7 +92,7 @@
         android:layout_width="121dp"
         android:layout_height="22dp"
         android:buttonTint="@color/colorPrimaryDark"
-        android:text="Sunday"
+        android:text="@string/Sunday"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.141"
@@ -120,8 +106,7 @@
         android:layout_height="22dp"
         android:layout_marginStart="40dp"
         android:buttonTint="@color/colorPrimaryDark"
-        android:text="Monday"
-
+        android:text="@string/Monday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.003"
         app:layout_constraintStart_toStartOf="parent"
@@ -133,8 +118,7 @@
         android:layout_width="117dp"
         android:layout_height="23dp"
         android:buttonTint="@color/colorPrimaryDark"
-        android:text="Tuesday"
-
+        android:text="@string/Tuesday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.136"
         app:layout_constraintStart_toStartOf="parent"
@@ -146,8 +130,7 @@
         android:layout_width="120dp"
         android:layout_height="23dp"
         android:buttonTint="@color/colorPrimaryDark"
-        android:text="Wednesday"
-
+        android:text="@string/Wednesday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.137"
         app:layout_constraintStart_toStartOf="parent"
@@ -159,8 +142,7 @@
         android:layout_width="113dp"
         android:layout_height="20dp"
         android:buttonTint="@color/colorPrimaryDark"
-        android:text="Thursday"
-
+        android:text="@string/Thursday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.134"
         app:layout_constraintStart_toStartOf="parent"
@@ -172,8 +154,7 @@
         android:layout_width="115dp"
         android:layout_height="21dp"
         android:buttonTint="@color/colorPrimaryDark"
-        android:text="Friday"
-
+        android:text="@string/Friday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.135"
         app:layout_constraintStart_toStartOf="parent"
@@ -185,8 +166,7 @@
         android:layout_width="120dp"
         android:layout_height="25dp"
         android:buttonTint="@color/colorPrimaryDark"
-        android:text="Saturday"
-
+        android:text="@string/Saturday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.137"
         app:layout_constraintStart_toStartOf="parent"
@@ -198,10 +178,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Course Color"
+        android:text="@string/coursecolor"
         android:textSize="18sp"
         android:textStyle="bold"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.131"
         app:layout_constraintStart_toStartOf="parent"
@@ -226,7 +205,7 @@
         android:backgroundTint="#2196F3"
         android:buttonTint="@color/colorPrimaryDark"
         android:fontFamily="monospace"
-        android:text="Update Course"
+        android:text="@string/updatecourse"
 
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

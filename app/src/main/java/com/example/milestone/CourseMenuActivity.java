@@ -50,11 +50,10 @@ public class CourseMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_menu);
         query();
-        addItemsToSpinner();
+        //addItemsToSpinner();
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-        ab.setTitle(" ");
 
         Button btn1 = (Button) findViewById(R.id.gotoaddcourse);
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +104,9 @@ public class CourseMenuActivity extends AppCompatActivity {
     }
 
     public void query(){
-        ClientFactory.appSyncClient().query(ListCoursesQuery.builder().build())
+        ModelStringFilterInput msfi = ModelStringFilterInput.builder().eq(UserDataController.getUsername()).build();
+        ModelCourseFilterInput mcfi = ModelCourseFilterInput.builder().author(msfi).build();
+        ClientFactory.appSyncClient().query(ListCoursesQuery.builder().filter(mcfi).build())
                 .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
                 .enqueue(queryCallback);
     }
@@ -228,7 +229,7 @@ public class CourseMenuActivity extends AppCompatActivity {
         Button ecb = (Button) findViewById(R.id.editcoursebtn);
         Button dcb = (Button) findViewById(R.id.deletecoursebtn);
 
-        if(mcData == null){
+        if(mCourses.size() == 0){
             courseList.add("No Courses");
             ecb.setEnabled(false);
             dcb.setEnabled(false);
@@ -245,40 +246,5 @@ public class CourseMenuActivity extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         courseSpinner.setAdapter(dataAdapter);
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.toHome:
-                setContentView(R.layout.activity_main);
-                Log.i(TAG, "home clicked");
-                CourseMenuActivity.this.finish();
-                return(true);
-            case R.id.courses:
-                Log.i(TAG, "courses clicked");
-                return(true);
-            case R.id.tasks:
-                Intent intent = new Intent(CourseMenuActivity.this,AddTaskActivity.class);
-                startActivity(intent);
-                CourseMenuActivity.this.finish();
-                Log.i(TAG, "tasks clicked");
-                return(true);
-            case R.id.signOut:
-                AWSMobileClient.getInstance().signOut();
-                finish();
-                System.exit(0);
-                Log.i(TAG, "logout clicked");
-                return(true);
-        }
-        return(super.onOptionsItemSelected(item));
     }
 }

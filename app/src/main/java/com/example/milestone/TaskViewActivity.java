@@ -42,7 +42,6 @@ public class TaskViewActivity extends AppCompatActivity {
     TaskViewAdapter mAdapter;
     private String dateSent;
     private String username;
-    Button complete;
 
     private ArrayList<ListTasksQuery.Item> mTasks;
 
@@ -63,6 +62,11 @@ public class TaskViewActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+        mAdapter.setItems(TaskController.filterTasksByDate(dateSent));
+        mAdapter.notifyDataSetChanged();
+        mTasks = TaskController.getTheTasks();
+        /*
+        //TRYING TO MAKE THIS WORK WITH TASK CONTROLLER
         //Tries to query, catches exception if no results provided
         try {
             query();
@@ -70,8 +74,10 @@ public class TaskViewActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         //query();
+         */
     }
 
+    /*
     @Override
     public void onResume(){
         super.onResume();
@@ -111,7 +117,7 @@ public class TaskViewActivity extends AppCompatActivity {
 
         }
     };
-
+    */
     public void buildAdapterButtons(){
         mAdapter = new TaskViewAdapter(this, new TaskViewAdapter.onItemClickListener() {
             @Override public void onCompleteClick(int position) {}
@@ -213,41 +219,4 @@ public class TaskViewActivity extends AppCompatActivity {
             });
         }
     };
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.toHome:
-                setContentView(R.layout.activity_main);
-                Log.i(TAG, "home clicked");
-                TaskViewActivity.this.finish();
-                return(true);
-            case R.id.courses:
-                Intent courseintent = new Intent(TaskViewActivity.this,CourseMenuActivity.class);
-                startActivity(courseintent);
-                Log.i(TAG, "courses clicked");
-                TaskViewActivity.this.finish();
-                return(true);
-            case R.id.tasks:
-                Intent taskintent = new Intent(TaskViewActivity.this,AddTaskActivity.class);
-                startActivity(taskintent);
-                Log.i(TAG, "tasks clicked");
-                TaskViewActivity.this.finish();
-                return(true);
-            case R.id.signOut:
-                AWSMobileClient.getInstance().signOut();
-                finish();
-                System.exit(0);
-                Log.i(TAG, "logout clicked");
-                return(true);
-        }
-        return(super.onOptionsItemSelected(item));
-    }
 }

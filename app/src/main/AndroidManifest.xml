@@ -15,36 +15,44 @@
         android:roundIcon="@mipmap/ic_launcher_milestone"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SubscriptionsActivity"></activity>
+        <activity
+            android:name=".SubscriptionsActivity"
+            android:noHistory="true"
+            android:label="Search Subscriptions"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".ProfileActivity"
             android:noHistory="true"
+            android:label="Profile"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".EditTaskActivity"
             android:noHistory="true"
+            android:label="Edit Task"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".EditCourseActivity"
             android:noHistory="true"
+            android:label="Edit Course"
             android:parentActivityName=".CourseMenuActivity" />
         <activity
             android:name=".TaskViewActivity"
             android:noHistory="true"
+            android:label="Task View"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".CourseMenuActivity"
-            android:label=""
+            android:label="Course Menu"
             android:noHistory="true"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AddTaskActivity"
-            android:label=""
+            android:label="Add Task"
             android:noHistory="true"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AddCourseActivity"
-            android:label=""
+            android:label="Add Course"
             android:noHistory="true"
             android:parentActivityName=".CourseMenuActivity" />
         <activity

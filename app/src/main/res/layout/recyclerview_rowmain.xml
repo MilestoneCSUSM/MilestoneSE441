@@ -15,7 +15,7 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:background="@color/colorPrimaryDark"
-        android:text="Cyber Security"
+        android:text="@string/classholder"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:gravity="center"
@@ -32,10 +32,10 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:gravity="center"
-        android:text="11/28/19 - Network Security Briefing"
+        android:text="@string/taskdescriptionplaceholder"
         android:textColor="#fff"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txt_class"
+        app:layout_constraintStart_toEndOf="@+id/txt_classm"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -149,43 +149,4 @@ public class EditTaskActivity extends AppCompatActivity {
             return "Invalid Percentage";
         }
     }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.toHome:
-                setContentView(R.layout.activity_main);
-                EditTaskActivity.this.finish();
-                Log.i(TAG, "home clicked");
-                return(true);
-            case R.id.courses:
-                Intent courseIntent = new Intent(EditTaskActivity.this,CourseMenuActivity.class);
-                startActivity(courseIntent);
-                EditTaskActivity.this.finish();
-                Log.i(TAG, "courses clicked");
-                return(true);
-            case R.id.tasks:
-                Intent taskIntent = new Intent(EditTaskActivity.this,AddTaskActivity.class);
-                startActivity(taskIntent);
-                EditTaskActivity.this.finish();
-                Log.i(TAG, "tasks clicked");
-                return(true);
-            case R.id.signOut:
-                AWSMobileClient.getInstance().signOut();
-                Intent signOutIntent = new Intent(EditTaskActivity.this,AuthenticationActivity.class);
-                EditTaskActivity.this.finish();
-                startActivity(signOutIntent);
-                Log.i(TAG, "logout clicked");
-                return(true);
-        }
-        return(super.onOptionsItemSelected(item));
-    }
 }

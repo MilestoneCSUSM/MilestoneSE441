@@ -48,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String username;
     private Spinner subscriptions,year;
     private DatePicker birthday;
-    private Button updateProfilebtn;
+    private Button updateProfilebtn,removeSubscriptionbtn;
     private ArrayList<String> userSubs;
     private ArrayList<ListUserDatasQuery.Item> userData;
 
@@ -56,21 +56,20 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        username = UserDataController.getUsername();
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle(" ");
 
-        username = AWSMobileClient.getInstance().getUsername();
+        try{
+            userQuery();
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
         TextView profuname = findViewById(R.id.profileusername);
         profuname.setText(username + "'s Profile");
         setYearSpinner();
         setSubscriptionsSpinner();
-        try{
-            userQuery();
-        } catch (NullPointerException e){
-            createProfileMutation();
-        }
 
         updateProfilebtn = findViewById(R.id.updateprofilebtn);
         updateProfilebtn.setOnClickListener(new View.OnClickListener() {
@@ -79,19 +78,14 @@ public class ProfileActivity extends AppCompatActivity {
                 updateProfile();
             }
         });
-    }
 
-    public void createProfileMutation(){
-        final String id = UUID.randomUUID().toString();
-        CreateUserDataInput firsttimeupdate = CreateUserDataInput.builder()
-                .id(id)
-                .username(username)
-                .birthday("01/01/1950")
-                .grade("Freshman")
-                .schoolname("CSUSM")
-                .subscriptions(null).build();
-        CreateUserDataMutation udm = CreateUserDataMutation.builder().input(firsttimeupdate).build();
-        ClientFactory.appSyncClient().mutate(udm).enqueue(createUserDataMutation);
+        removeSubscriptionbtn = findViewById(R.id.subscriptiondeletebtn);
+        removeSubscriptionbtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                UserDataController.updateSubscriptions();
+            }
+        });
     }
 
     public void setSubscriptionsSpinner(){
@@ -106,9 +100,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void updateSubscriptionsSpinner() {
         subscriptions = (Spinner) findViewById(R.id.subscriptionspinner);
-        userSubs = new ArrayList<>(userData.get(0).subscriptions());
-
-
+        userSubs = new ArrayList<>(UserDataController.getSubscribedCourseNames());
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, userSubs);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         subscriptions.setAdapter(dataAdapter);
@@ -116,7 +108,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void updateProfile(){
         final String id = userData.get(0).id();
-        String uName = username;
         String usersYear = year.getSelectedItem().toString();
         String bday = getBirthDate();
 
@@ -125,7 +116,8 @@ public class ProfileActivity extends AppCompatActivity {
                 .username(username)
                 .birthday(bday)
                 .grade(usersYear)
-                .schoolname("CSUSM").build();
+                .schoolname("CSUSM")
+                .firstVisit(false).build();
 
         UpdateUserDataMutation udm = UpdateUserDataMutation.builder().input(updateUser).build();
 
@@ -161,17 +153,6 @@ public class ProfileActivity extends AppCompatActivity {
                 .enqueue(queryCallback);
     }
 
-    private GraphQLCall.Callback<CreateUserDataMutation.Data> createUserDataMutation = new GraphQLCall.Callback<CreateUserDataMutation.Data>() {
-        @Override
-        public void onResponse(@Nonnull Response<CreateUserDataMutation.Data> response) {
-            Log.i(TAG, "Successfully created user");
-        }
-
-        @Override
-        public void onFailure(@Nonnull ApolloException e) {
-            Log.i(TAG, "Failed to create user");
-        }
-    };
 
     private GraphQLCall.Callback<UpdateUserDataMutation.Data> updateUserDataMutation = new GraphQLCall.Callback<UpdateUserDataMutation.Data>() {
         @Override
@@ -230,28 +211,22 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public void onResponse(@Nonnull Response<ListUserDatasQuery.Data> response) {
             userData = new ArrayList<>(response.data().listUserDatas().items());
-            runOnUiThread(new Runnable() {
-                @Override
+            runOnUiThread(new Runnable(){
                 public void run() {
-                    if(userData.size() == 0) {
-                        createProfileMutation();
-                    } else {
-                        setUserYear(userData.get(0).grade());
-                        setUserBirthday(userData.get(0).birthday());
+                    setUserYear(userData.get(0).grade());
+                    setUserBirthday(userData.get(0).birthday());
+                    List<String> tmp = new ArrayList<>(userData.get(0).subscriptions());
+                    for(int i = 0; i< tmp.size(); i++){
+                        try{
+                            UserDataController.queryForCourseNamesByID(tmp.get(i));
+                        }
+                        catch (NullPointerException e){
+                            e.printStackTrace();
+                        }
                     }
+                    updateSubscriptionsSpinner();
                 }
-            });
-            /*
-            userData = new ArrayList<>(response.data().listUserDatas().items());
-            if(userData.size() == 0) {
-                createProfileMutation();
-            } else {
-                setUserYear(userData.get(0).grade());
-                setUserBirthday(userData.get(0).birthday());
-            }
-
-             */
-            Log.i(TAG, userData.toString());
+        });
         }
 
         @Override

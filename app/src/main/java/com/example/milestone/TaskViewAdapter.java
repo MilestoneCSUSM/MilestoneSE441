@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -127,39 +128,43 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.ViewHo
         }
 
         void bindData(ListTasksQuery.Item item) {
-            int courseColor = Color.parseColor(item.course().color());
-            int lighterCC = lighter(courseColor);
+            try {
+                int courseColor = Color.parseColor(item.course().color());
+                int lighterCC = lighter(courseColor);
 
-            txt_class.setText("Class");
-            txt_classvalue.setText(item.coursename());
-            txt_class.setBackgroundColor(courseColor);
-            txt_classvalue.setBackgroundColor(courseColor);
+                txt_class.setText(R.string.classholder);
+                txt_classvalue.setText(item.coursename());
+                txt_class.setBackgroundColor(courseColor);
+                txt_classvalue.setBackgroundColor(courseColor);
 
-            txt_priority.setText("Priority");
-            txt_priorityvalue.setText(String.valueOf(item.priority()));
-            txt_priority.setBackgroundColor(lighterCC);
-            txt_priorityvalue.setBackgroundColor(lighterCC);
+                txt_priority.setText(R.string.priorityholder);
+                txt_priorityvalue.setText(String.valueOf(item.priority()));
+                txt_priority.setBackgroundColor(lighterCC);
+                txt_priorityvalue.setBackgroundColor(lighterCC);
 
-            txt_percentage.setText("Percentage");
-            txt_percentageValue.setText(String.valueOf(item.percentage()));
-            txt_percentage.setBackgroundColor(lighterCC);
-            txt_percentageValue.setBackgroundColor(lighterCC);
+                txt_percentage.setText(R.string.percentageholder);
+                txt_percentageValue.setText(String.valueOf(item.percentage()));
+                txt_percentage.setBackgroundColor(lighterCC);
+                txt_percentageValue.setBackgroundColor(lighterCC);
 
-            txt_tasktitle.setText("Title");
-            txt_tasktitlevalue.setText(item.title());
-            txt_tasktitle.setBackgroundColor(courseColor);
-            txt_tasktitlevalue.setBackgroundColor(courseColor);
+                txt_tasktitle.setText(R.string.titleholder);
+                txt_tasktitlevalue.setText(item.title());
+                txt_tasktitle.setBackgroundColor(courseColor);
+                txt_tasktitlevalue.setBackgroundColor(courseColor);
 
-            txt_comments.setText("Comments");
-            txt_commentsvalue.setText(item.comments());
-            txt_comments.setBackgroundColor(courseColor);
-            txt_commentsvalue.setBackgroundColor(courseColor);
+                txt_comments.setText(R.string.commentsholder);
+                txt_commentsvalue.setText(item.comments());
+                txt_comments.setBackgroundColor(courseColor);
+                txt_commentsvalue.setBackgroundColor(courseColor);
 
-            if(item.completed()){
-                complete.setEnabled(false);
-                complete.setBackgroundColor(Color.GRAY);
-                edit.setEnabled(false);
-                edit.setBackgroundColor(Color.GRAY);
+                if (item.completed()) {
+                    complete.setEnabled(false);
+                    complete.setBackgroundColor(Color.GRAY);
+                    edit.setEnabled(false);
+                    edit.setBackgroundColor(Color.GRAY);
+                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
         }
     }

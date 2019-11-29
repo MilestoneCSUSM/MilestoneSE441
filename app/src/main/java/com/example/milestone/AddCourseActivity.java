@@ -49,7 +49,6 @@ public class AddCourseActivity extends AppCompatActivity {
         setColorsSpinner();
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-        ab.setTitle(" ");
 
         Button btnAddCourse = (Button) findViewById(R.id.addcoursebtn);
         btnAddCourse.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +124,7 @@ public class AddCourseActivity extends AppCompatActivity {
 
     private void runMutation(){
         final String id = UUID.randomUUID().toString();
-        final String username = AWSMobileClient.getInstance().getUsername().toString();
+        final String username = UserDataController.getUsername();
         final String courseName = ((EditText) findViewById(R.id.coursenamebox)).getText().toString();
         final String instructor = ((EditText) findViewById(R.id.instructornamebox)).getText().toString();
         final String meetingDays = getMeetingDays();
@@ -137,7 +136,7 @@ public class AddCourseActivity extends AppCompatActivity {
                 meetingdays(meetingDays).
                 color(color).
                 author(username).build();
-        Log.i(TAG, " WHATS GOING ON!!!!!!!!!!!!!!!!!!" + createCourseInput.author()+createCourseInput.id()+createCourseInput.coursename());
+
         CreateCourseMutation addCourseMutation = CreateCourseMutation.builder()
                 .input(createCourseInput)
                 .build();
@@ -171,36 +170,4 @@ public class AddCourseActivity extends AppCompatActivity {
             });
         }
     };
-
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.toHome:
-                setContentView(R.layout.activity_main);
-                AddCourseActivity.this.finish();
-                Log.i(TAG, "home clicked");
-                return(true);
-            case R.id.courses:
-                Intent courseIntent = new Intent(AddCourseActivity.this,CourseMenuActivity.class);
-                startActivity(courseIntent);
-                AddCourseActivity.this.finish();
-                Log.i(TAG, "courses clicked");
-                return(true);
-            case R.id.tasks:
-                Intent taskIntent = new Intent(AddCourseActivity.this,AddTaskActivity.class);
-                startActivity(taskIntent);
-                AddCourseActivity.this.finish();
-                Log.i(TAG, "tasks clicked");
-                return(true);
-            case R.id.signOut:
-                AWSMobileClient.getInstance().signOut();
-                finish();
-                System.exit(0);
-                Log.i(TAG, "logout clicked");
-                return(true);
-        }
-        return(super.onOptionsItemSelected(item));
-    }
 }

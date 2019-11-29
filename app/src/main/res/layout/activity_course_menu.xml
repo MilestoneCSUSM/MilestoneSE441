@@ -7,20 +7,6 @@
     android:orientation="vertical"
     tools:context="com.example.milestone.CourseMenuActivity">
 
-    <TextView
-        android:id="@+id/coursemenutext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:text="Course Menu"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
-
     <Button
         android:id="@+id/gotoaddcourse"
         android:layout_width="329dp"
@@ -28,7 +14,7 @@
         android:backgroundTint="#2196F3"
         android:buttonTint="@color/colorPrimaryDark"
         android:fontFamily="monospace"
-        android:text="Add Course"
+        android:text="@string/addcourse"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +40,7 @@
         android:backgroundTint="#2196F3"
         android:buttonTint="@color/colorPrimaryDark"
         android:fontFamily="monospace"
-        android:text="Edit an Existing Course"
+        android:text="@string/editcourse"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +55,7 @@
         android:backgroundTint="#2196F3"
         android:buttonTint="@color/colorPrimaryDark"
         android:fontFamily="monospace"
-        android:text="Delete a Course"
+        android:text="@string/deletecourse"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

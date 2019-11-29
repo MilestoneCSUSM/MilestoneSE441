@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.amazonaws.amplify.generated.graphql.CreateCourseMutation;
 import com.amazonaws.amplify.generated.graphql.CreateTaskMutation;
 import com.amazonaws.amplify.generated.graphql.ListCoursesQuery;
+import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
 import com.apollographql.apollo.GraphQLCall;
@@ -32,10 +33,13 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 
 import type.CreateTaskInput;
+import type.ModelCourseFilterInput;
+import type.ModelStringFilterInput;
 
 public class AddTaskActivity extends AppCompatActivity {
 
     private final String TAG = AddTaskActivity.class.getSimpleName();
+    private String username;
     private ArrayList<ListCoursesQuery.Item> mCourses;
     private List<ListCoursesQuery.Item> mcData = new ArrayList<>();
     private Spinner taskCourseSpinner,prioritySpinner;
@@ -44,6 +48,7 @@ public class AddTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+        username = UserDataController.getUsername();
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
@@ -61,7 +66,25 @@ public class AddTaskActivity extends AppCompatActivity {
         });
 
     }
-
+    public void runMutation(){
+        final String courseName = taskCourseSpinner.getSelectedItem().toString();
+        final String taskTitle = ((EditText) findViewById(R.id.tasktitlebox)).getText().toString();
+        final String dueDate = getDueDate();
+        final String priority = prioritySpinner.getSelectedItem().toString();
+        final double percentage = Double.valueOf(getPercentage());
+        final String comments = ((EditText) findViewById(R.id.taskcommentbox)).getText().toString();
+        TaskController.addATask(courseName,taskTitle,dueDate,priority,comments,percentage,getCourseID());
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(AddTaskActivity.this, "Added task: " + taskTitle, Toast.LENGTH_SHORT).show();
+                AddTaskActivity.this.finish();
+                Log.i("Results", "Added Task");
+            }
+        });
+    }
+    /*
+    REMOVED WHILE TESTING TASKCONTROLLER
     public void runMutation(){
         final String id = UUID.randomUUID().toString();
         final String courseName = taskCourseSpinner.getSelectedItem().toString();
@@ -73,6 +96,7 @@ public class AddTaskActivity extends AppCompatActivity {
         final boolean completed = false;
         CreateTaskInput createTaskInput = CreateTaskInput.builder().
                 id(id).
+                author(UserDataController.getUsername()).
                 coursename(courseName).
                 title(taskTitle).
                 duedate(dueDate).
@@ -107,14 +131,14 @@ public class AddTaskActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.e("", "Failed to perform AddCourseMutation", e);
+                    Log.e("", "Failed to perform AddTaskMutation", e);
                     Toast.makeText(AddTaskActivity.this, "Failed to add Task", Toast.LENGTH_SHORT).show();
                     AddTaskActivity.this.finish();
                 }
             });
         }
     };
-
+    */
     public String getCourseID(){
         String cNameSelected = taskCourseSpinner.getSelectedItem().toString();
         int courseIndex = taskCourseSpinner.getSelectedItemPosition();
@@ -167,7 +191,9 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     public void query(){
-        ClientFactory.appSyncClient().query(ListCoursesQuery.builder().build())
+        ModelStringFilterInput msfi = ModelStringFilterInput.builder().eq(UserDataController.getUsername()).build();
+        ModelCourseFilterInput mcfi = ModelCourseFilterInput.builder().author(msfi).build();
+        ClientFactory.appSyncClient().query(ListCoursesQuery.builder().filter(mcfi).build())
                 .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
                 .enqueue(queryCallback);
     }
@@ -211,39 +237,5 @@ public class AddTaskActivity extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         taskCourseSpinner.setAdapter(dataAdapter);
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.toHome:
-                setContentView(R.layout.activity_main);
-                AddTaskActivity.this.finish();
-                Log.i(TAG, "home clicked");
-                return(true);
-            case R.id.courses:
-                Intent courseIntent = new Intent(AddTaskActivity.this,CourseMenuActivity.class);
-                startActivity(courseIntent);
-                AddTaskActivity.this.finish();
-                Log.i(TAG, "courses clicked");
-                return(true);
-            case R.id.tasks:
-                Log.i(TAG, "tasks clicked");
-                return(true);
-            case R.id.signOut:
-                AWSMobileClient.getInstance().signOut();
-                finish();
-                System.exit(0);
-                Log.i(TAG, "logout clicked");
-                return(true);
-        }
-        return(super.onOptionsItemSelected(item));
     }
 }

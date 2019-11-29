@@ -7,6 +7,7 @@ query GetUserData($id: ID!) {
     birthday
     grade
     subscriptions
+    firstVisit
   }
 }
 query ListUserDatas(
@@ -22,6 +23,7 @@ query ListUserDatas(
       birthday
       grade
       subscriptions
+      firstVisit
     }
     nextToken
   }
@@ -37,6 +39,7 @@ query GetCourse($id: ID!) {
     tasks {
       items {
         id
+        author
         coursename
         title
         duedate
@@ -72,6 +75,7 @@ query ListCourses(
 query GetTask($id: ID!) {
   getTask(id: $id) {
     id
+    author
     course {
       id
       coursename
@@ -100,6 +104,7 @@ query ListTasks(
   listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      author
       course {
         id
         coursename
@@ -117,32 +122,5 @@ query ListTasks(
       completed
     }
     nextToken
-  }
-}
-query SearchCourses(
-  $filter: SearchableCourseFilterInput
-  $sort: SearchableCourseSortInput
-  $limit: Int
-  $nextToken: String
-) {
-  searchCourses(
-    filter: $filter
-    sort: $sort
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      coursename
-      instructor
-      color
-      meetingdays
-      author
-      tasks {
-        nextToken
-      }
-    }
-    nextToken
-    total
   }
 }

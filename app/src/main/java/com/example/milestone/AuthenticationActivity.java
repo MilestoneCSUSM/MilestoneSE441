@@ -21,7 +21,7 @@ public class AuthenticationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
         ActionBar ab = getSupportActionBar();
-
+        ClientFactory.init(this);
         AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback<UserStateDetails>() {
 
             @Override
@@ -30,6 +30,7 @@ public class AuthenticationActivity extends AppCompatActivity {
                 switch (userStateDetails.getUserState()){
                     case SIGNED_IN:
                         Intent i = new Intent(AuthenticationActivity.this, MainActivity.class);
+                        TaskController.queryForTasks(AWSMobileClient.getInstance().getUsername());
                         startActivity(i);
                         break;
                     case SIGNED_OUT:
