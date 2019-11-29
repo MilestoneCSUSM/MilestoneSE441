@@ -77,10 +77,10 @@ public class TaskController {
     }
 
 
-    public static ArrayList<ListTasksQuery.Item> filterTasksByDate(String dateSent){
+    public static ArrayList<ListTasksQuery.Item> filterTasksByDate(String dateSent, String username){
         ArrayList<ListTasksQuery.Item> tasksByDate = new ArrayList<>();
         for(int i = 0; i < theTasks.size(); i++){
-            if(theTasks.get(i).duedate().equals(dateSent)){
+            if(theTasks.get(i).duedate().equals(dateSent) && theTasks.get(i).author().equals(username)){
                 tasksByDate.add(theTasks.get(i));
             }
         }

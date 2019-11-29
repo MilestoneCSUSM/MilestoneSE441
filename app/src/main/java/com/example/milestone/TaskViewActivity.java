@@ -62,11 +62,13 @@ public class TaskViewActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-        mAdapter.setItems(TaskController.filterTasksByDate(dateSent));
+
+        mAdapter.setItems(TaskController.filterTasksByDate(dateSent, username));
         mAdapter.notifyDataSetChanged();
         mTasks = TaskController.getTheTasks();
-        /*
+
         //TRYING TO MAKE THIS WORK WITH TASK CONTROLLER
+        /*
         //Tries to query, catches exception if no results provided
         try {
             query();
@@ -74,10 +76,10 @@ public class TaskViewActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         //query();
-         */
+        */
     }
 
-    /*
+   /*
     @Override
     public void onResume(){
         super.onResume();
@@ -118,6 +120,7 @@ public class TaskViewActivity extends AppCompatActivity {
         }
     };
     */
+
     public void buildAdapterButtons(){
         mAdapter = new TaskViewAdapter(this, new TaskViewAdapter.onItemClickListener() {
             @Override public void onCompleteClick(int position) {}
