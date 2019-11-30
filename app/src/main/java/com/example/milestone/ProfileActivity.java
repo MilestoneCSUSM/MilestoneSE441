@@ -83,7 +83,9 @@ public class ProfileActivity extends AppCompatActivity {
         removeSubscriptionbtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                UserDataController.removeUserSubscription(subscriptions.getSelectedItem().toString());
                 UserDataController.updateSubscriptions();
+                updateSubscriptionsSpinner();
             }
         });
     }
@@ -117,7 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
                 .birthday(bday)
                 .grade(usersYear)
                 .schoolname("CSUSM")
-                .firstVisit(false).build();
+                .firstVisit(true).build();
 
         UpdateUserDataMutation udm = UpdateUserDataMutation.builder().input(updateUser).build();
 
@@ -213,16 +215,20 @@ public class ProfileActivity extends AppCompatActivity {
             userData = new ArrayList<>(response.data().listUserDatas().items());
             runOnUiThread(new Runnable(){
                 public void run() {
-                    setUserYear(userData.get(0).grade());
-                    setUserBirthday(userData.get(0).birthday());
-                    List<String> tmp = new ArrayList<>(userData.get(0).subscriptions());
-                    for(int i = 0; i< tmp.size(); i++){
-                        try{
-                            UserDataController.queryForCourseNamesByID(tmp.get(i));
+                    try{
+                        setUserYear(userData.get(0).grade());
+                        setUserBirthday(userData.get(0).birthday());
+                        List<String> tmp = new ArrayList<>(userData.get(0).subscriptions());
+                        for(int i = 0; i< tmp.size(); i++){
+                            try{
+                                UserDataController.queryForCourseNamesByID(tmp.get(i));
+                            }
+                            catch (NullPointerException e){
+                                e.printStackTrace();
+                            }
                         }
-                        catch (NullPointerException e){
-                            e.printStackTrace();
-                        }
+                    } catch (Exception e){
+                        e.printStackTrace();
                     }
                     updateSubscriptionsSpinner();
                 }

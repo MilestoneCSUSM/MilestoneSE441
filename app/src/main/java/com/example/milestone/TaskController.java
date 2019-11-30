@@ -95,6 +95,19 @@ public class TaskController {
         return tasksByDate;
     }
 
+
+    public static ArrayList<ListTasksQuery.Item> filterTasksByUser(String username) {
+        ArrayList<ListTasksQuery.Item> taskList = new ArrayList<>();
+
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).author().equals(username)) {
+                taskList.add(tasks.get(i));
+                Log.i(TAG, "ADDED A FILTERED TASK ------------" + tasks.get(i).toString());
+            }
+        }
+        return taskList;
+    }
+
     public static ArrayList<ListTasksQuery.Item> filterTasks(String courseIds, String username){
         ArrayList<ListTasksQuery.Item> taskList = new ArrayList<>();
 

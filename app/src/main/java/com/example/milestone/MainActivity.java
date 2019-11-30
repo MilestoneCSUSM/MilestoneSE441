@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         } catch(NullPointerException e){
             e.printStackTrace();
         }
-        TaskController.queryForAllTasks();
+        //TaskController.queryForAllTasks();
     }
 
     @Override
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ClientFactory.init(this);
-        //UserDataController.setUserDetails();
+        UserDataController.setUserDetails();
         //Setting up the Upcoming Tasks recycler view.
         mRecyclerView = findViewById(R.id.mainrecyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -79,13 +79,25 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Current Date: " + currDate);
         datePicker = (CalendarView) findViewById(R.id.calendar);
 
-        try {
-            UserDataController.setUserDetails();
-            mTasks = TaskController.filterTasks(UserDataController.getSubbedCourses(),UserDataController.getUsername());
-            mTasks = TaskController.filterTasksByDateGTE(mTasks,currDate);
-            mAdapter.setItems(mTasks);
-            mAdapter.notifyDataSetChanged();
-        } catch (Exception e){
+
+        try{
+            TaskController.queryForAllTasks();
+            if(UserDataController.getSubsSize()>0){
+                mTasks = TaskController.filterTasks(UserDataController.getSubbedCourses(),UserDataController.getUsername());
+                Log.i(TAG,"mTasks after filter by CID ------------" +mTasks.toString());
+                mTasks = TaskController.filterTasksByDateGTE(mTasks,currDate);
+                Log.i(TAG,"mTasks after filter by DATE ------------" +mTasks.toString());
+                mAdapter.setItems(mTasks);
+                mAdapter.notifyDataSetChanged();
+            }
+            else{
+                mTasks = TaskController.filterTasksByUser(UserDataController.getUsername());
+                mTasks = TaskController.filterTasksByDateGTE(mTasks,currDate);
+                Log.i(TAG,"mTasks after filter by DATE ------------" +mTasks.toString());
+                mAdapter.setItems(mTasks);
+                mAdapter.notifyDataSetChanged();
+            }
+        } catch (NullPointerException e){
             e.printStackTrace();
         }
 
@@ -94,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
         String date = df.format(Calendar.getInstance().getTime());
         TextView mdy = (TextView) findViewById(R.id.dateDisplay);
         mdy.setText(date);
-
 
         //Adding an event listener to the calendar. Passes view to TaskViewActivity on date click.
         datePicker.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -123,6 +134,13 @@ public class MainActivity extends AppCompatActivity {
                         mAdapter.setItems(mTasks);
                         mAdapter.notifyDataSetChanged();
                     }
+                    else{
+                        mTasks = TaskController.filterTasksByUser(UserDataController.getUsername());
+                        mTasks = TaskController.filterTasksByDateGTE(mTasks,currDate);
+                        Log.i(TAG,"mTasks after filter by DATE ------------" +mTasks.toString());
+                        mAdapter.setItems(mTasks);
+                        mAdapter.notifyDataSetChanged();
+                    }
                 } catch (NullPointerException e){
                     e.printStackTrace();
                 }
@@ -140,6 +158,13 @@ public class MainActivity extends AppCompatActivity {
                     if(UserDataController.getSubsSize()>0){
                         mTasks = TaskController.filterTasks(UserDataController.getSubbedCourses(),UserDataController.getUsername());
                         Log.i(TAG,"mTasks after filter by CID ------------" +mTasks.toString());
+                        mTasks = TaskController.filterTasksByDateGTE(mTasks,currDate);
+                        Log.i(TAG,"mTasks after filter by DATE ------------" +mTasks.toString());
+                        mAdapter.setItems(mTasks);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                    else{
+                        mTasks = TaskController.filterTasksByUser(UserDataController.getUsername());
                         mTasks = TaskController.filterTasksByDateGTE(mTasks,currDate);
                         Log.i(TAG,"mTasks after filter by DATE ------------" +mTasks.toString());
                         mAdapter.setItems(mTasks);
@@ -190,18 +215,21 @@ public class MainActivity extends AppCompatActivity {
                 AWSMobileClient.getInstance().signOut(SignOutOptions.builder().signOutGlobally(true).build(), new Callback<Void>() {
                     @Override
                     public void onResult(Void result) {
+                        Intent signOutIntent = new Intent(MainActivity.this,AuthenticationActivity.class);
+                        startActivity(signOutIntent);
+                        MainActivity.this.finish();
 
                     }
 
                     @Override
                     public void onError(Exception e) {
-
+                        AWSMobileClient.getInstance().signOut();
+                        Intent signOutIntent = new Intent(MainActivity.this,AuthenticationActivity.class);
+                        startActivity(signOutIntent);
+                        MainActivity.this.finish();
                     }
                 });
                 //AWSMobileClient.getInstance().signOut();
-                //Intent signOutIntent = new Intent(MainActivity.this,AuthenticationActivity.class);
-                //MainActivity.this.finish();
-                //startActivity(signOutIntent);
                 Log.i(TAG, "logout clicked");
                 return(true);
 

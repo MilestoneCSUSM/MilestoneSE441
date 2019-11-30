@@ -2,6 +2,7 @@ package com.example.milestone;
 
 import android.service.autofill.UserData;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.amazonaws.amplify.generated.graphql.CreateUserDataMutation;
 import com.amazonaws.amplify.generated.graphql.GetCourseQuery;
@@ -67,7 +68,7 @@ public class UserDataController {
                 .grade("Freshman")
                 .schoolname("CSUSM")
                 .subscriptions(tmp)
-                .firstVisit(false)
+                .firstVisit(true)
                 .build();
         CreateUserDataMutation udm = CreateUserDataMutation.builder().input(firsttimeupdate).build();
         ClientFactory.appSyncClient().mutate(udm).enqueue(createUserDataMutation);
@@ -99,8 +100,14 @@ public class UserDataController {
         }
     }
 
-    public static void removeUserSubscription(String id){
-        userSubscriptions.remove(id);
+    public static String getCourseID(String coursename){
+        return userSubscriptions.get(coursename);
+    }
+
+    public static void removeUserSubscription(String name){
+        Log.i(TAG, "REMOVED SUBSCRIPTION TO ::::::::::::::::"+name);
+        Log.i(TAG, "REMOVED SUBSCRIPTION TO ::::::::::::::::"+userSubscriptions.get(name));
+        userSubscriptions.remove(name);
     }
 
 
@@ -208,7 +215,7 @@ public class UserDataController {
     private static GraphQLCall.Callback<UpdateUserDataMutation.Data> mutationCallback = new GraphQLCall.Callback<UpdateUserDataMutation.Data> (){
         @Override
         public void onResponse(@Nonnull Response<UpdateUserDataMutation.Data> response){
-
+            Log.i(TAG, "REMOVED SUBSCRIPTION");
         }
 
         @Override
