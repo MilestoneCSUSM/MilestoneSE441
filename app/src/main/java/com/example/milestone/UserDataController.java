@@ -1,9 +1,7 @@
 package com.example.milestone;
 
-import android.service.autofill.UserData;
-import android.util.Log;
-import android.widget.Toast;
 
+import android.util.Log;
 import com.amazonaws.amplify.generated.graphql.CreateUserDataMutation;
 import com.amazonaws.amplify.generated.graphql.GetCourseQuery;
 import com.amazonaws.amplify.generated.graphql.ListUserDatasQuery;
@@ -12,14 +10,11 @@ import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
 import com.apollographql.apollo.GraphQLCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-
 import javax.annotation.Nonnull;
-
 import type.CreateUserDataInput;
 import type.ModelStringFilterInput;
 import type.ModelUserDataFilterInput;
@@ -74,10 +69,6 @@ public class UserDataController {
         ClientFactory.appSyncClient().mutate(udm).enqueue(createUserDataMutation);
     }
 
-    public static String userDatatoString(){
-        return username +" "+ userID +" "+ subs.toString() ;
-    }
-
     public static void setUsername(String uname){
         username = uname;
     }
@@ -105,8 +96,6 @@ public class UserDataController {
     }
 
     public static void removeUserSubscription(String name){
-        Log.i(TAG, "REMOVED SUBSCRIPTION TO ::::::::::::::::"+name);
-        Log.i(TAG, "REMOVED SUBSCRIPTION TO ::::::::::::::::"+userSubscriptions.get(name));
         userSubscriptions.remove(name);
     }
 
@@ -201,8 +190,6 @@ public class UserDataController {
             } catch (IndexOutOfBoundsException e){
                 e.printStackTrace();
             }
-
-            Log.i(TAG, "USER DATA FROM UDC USER QUERY::::::::::::::::"+user.toString());
         }
 
         @Override
@@ -215,7 +202,6 @@ public class UserDataController {
     private static GraphQLCall.Callback<UpdateUserDataMutation.Data> mutationCallback = new GraphQLCall.Callback<UpdateUserDataMutation.Data> (){
         @Override
         public void onResponse(@Nonnull Response<UpdateUserDataMutation.Data> response){
-            Log.i(TAG, "REMOVED SUBSCRIPTION");
         }
 
         @Override
@@ -228,7 +214,6 @@ public class UserDataController {
         @Override
         public void onResponse(@Nonnull Response<GetCourseQuery.Data> response) {
             userSubscriptions.put(response.data().getCourse().coursename(),response.data().getCourse().id());
-            //Log.i(TAG, "FROM UDC:::::::::::::::::" + userSubscriptions.toString());
         }
 
         @Override
@@ -241,7 +226,6 @@ public class UserDataController {
     private static GraphQLCall.Callback<CreateUserDataMutation.Data> createUserDataMutation = new GraphQLCall.Callback<CreateUserDataMutation.Data>() {
         @Override
         public void onResponse(@Nonnull Response<CreateUserDataMutation.Data> response) {
-            Log.i(TAG, "Successfully created user"+response.data().toString());
         }
 
         @Override

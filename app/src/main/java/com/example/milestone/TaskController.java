@@ -1,10 +1,6 @@
 package com.example.milestone;
 
 import android.util.Log;
-import android.widget.Toast;
-
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.amazonaws.amplify.generated.graphql.CreateTaskMutation;
 import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
 import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
@@ -18,13 +14,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
-
 import javax.annotation.Nonnull;
-
 import type.CreateTaskInput;
-import type.ModelCourseFilterInput;
-import type.ModelStringFilterInput;
-import type.ModelTaskFilterInput;
+
 
 public class TaskController {
 
@@ -67,16 +59,6 @@ public class TaskController {
 
     }
 
-    /*
-    public static void queryForTasks(String username, String dateSent){
-        ModelStringFilterInput msfi = ModelStringFilterInput.builder().eq(username).eq(dateSent).build();
-        ModelTaskFilterInput mtfi = ModelTaskFilterInput.builder().author(msfi).duedate(msfi).build();
-
-        ClientFactory.appSyncClient().query(ListTasksQuery.builder().filter(mtfi).build())
-                .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
-                .enqueue(queryCallback);
-    }
-    */
     public static void queryForAllTasks(){
         ClientFactory.appSyncClient().query(ListTasksQuery.builder().build())
                 .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
@@ -91,7 +73,6 @@ public class TaskController {
                 tasksByDate.add(tasks.get(i));
             }
         }
-        Log.i(TAG, "TASKS BY DATE:::::::::::::::::::::" + tasksByDate.toString());
         return tasksByDate;
     }
 
@@ -102,7 +83,6 @@ public class TaskController {
         for (int i = 0; i < tasks.size(); i++) {
             if (tasks.get(i).author().equals(username)) {
                 taskList.add(tasks.get(i));
-                Log.i(TAG, "ADDED A FILTERED TASK ------------" + tasks.get(i).toString());
             }
         }
         return taskList;
@@ -114,7 +94,6 @@ public class TaskController {
         for(int i = 0; i < tasks.size();i++){
             if(tasks.get(i).course().id().contains(courseIds) || tasks.get(i).author().equals(username)){
                 taskList.add(tasks.get(i));
-                Log.i(TAG,"ADDED A FILTERED TASK ------------" +tasks.get(i).toString());
             }
         }
         return taskList;
@@ -152,11 +131,9 @@ public class TaskController {
                 Date taskDate = sdf.parse(theTasks.get(i).duedate());
                 if(taskDate.equals(dateToCompare)){
                     tasksByDate.add(theTasks.get(i));
-                    Log.i(TAG,"ADDED A FILTERED BY DATE TASK ------------" +theTasks.get(i).toString());
                 }
                 else if(taskDate.after(dateToCompare)){
                     tasksByDate.add(theTasks.get(i));
-                    Log.i(TAG,"ADDED A FILTERED BY DATE TASK ------------" +theTasks.get(i).toString());
                 }
             }
         } catch (ParseException e){
@@ -169,8 +146,6 @@ public class TaskController {
         @Override
         public void onResponse(@Nonnull Response<ListTasksQuery.Data> response) {
             theTasks = new ArrayList<>(response.data().listTasks().items());
-            Log.i(TAG, "TASKS FROM INSIDE CONTROLLER:::::::::::" + theTasks.toString());
-
         }
 
         @Override
@@ -184,8 +159,6 @@ public class TaskController {
         @Override
         public void onResponse(@Nonnull Response<ListTasksQuery.Data> response) {
             tasks = new ArrayList<>(response.data().listTasks().items());
-            Log.i(TAG, "trying to query all the tasks:::::::::::::::::::::::::::::::::::::::" + theTasks.toString());
-
         }
 
         @Override

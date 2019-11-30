@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,19 +14,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.amazonaws.amplify.generated.graphql.UpdateCourseMutation;
 import com.amazonaws.amplify.generated.graphql.UpdateTaskMutation;
-import com.amazonaws.mobile.client.AWSMobileClient;
 import com.apollographql.apollo.GraphQLCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.annotation.Nonnull;
-
 import type.UpdateTaskInput;
 
 public class EditTaskActivity extends AppCompatActivity {
@@ -108,7 +100,6 @@ public class EditTaskActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i("Results", "Updated Task");
                     Toast.makeText(EditTaskActivity.this, "Updated Task", Toast.LENGTH_SHORT).show();
                     EditTaskActivity.this.finish();
                 }

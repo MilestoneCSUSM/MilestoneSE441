@@ -2,19 +2,12 @@ package com.example.milestone;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.StringRes;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
 import java.util.ArrayList;
 import java.util.List;

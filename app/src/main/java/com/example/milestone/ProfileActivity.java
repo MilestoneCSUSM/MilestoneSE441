@@ -1,11 +1,9 @@
 package com.example.milestone;
 
-import androidx.annotation.WorkerThread;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,32 +12,16 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.amazonaws.amplify.generated.graphql.CreateUserDataMutation;
-import com.amazonaws.amplify.generated.graphql.GetUserDataQuery;
-import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
 import com.amazonaws.amplify.generated.graphql.ListUserDatasQuery;
-import com.amazonaws.amplify.generated.graphql.UpdateCourseMutation;
 import com.amazonaws.amplify.generated.graphql.UpdateUserDataMutation;
-import com.amazonaws.mobile.client.AWSMobileClient;
-import com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient;
 import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
 import com.apollographql.apollo.GraphQLCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 import javax.annotation.Nonnull;
-
-import type.CreateUserDataInput;
 import type.ModelStringFilterInput;
-import type.ModelTaskFilterInput;
 import type.ModelUserDataFilterInput;
 import type.UpdateUserDataInput;
 

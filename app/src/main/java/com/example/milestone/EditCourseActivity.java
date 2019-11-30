@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,23 +13,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.amazonaws.amplify.generated.graphql.CreateCourseMutation;
 import com.amazonaws.amplify.generated.graphql.UpdateCourseMutation;
 import com.amazonaws.mobile.client.AWSMobileClient;
-import com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient;
 import com.apollographql.apollo.GraphQLCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
-
 import javax.annotation.Nonnull;
-
-import type.CreateCourseInput;
 import type.UpdateCourseInput;
 
 public class EditCourseActivity extends AppCompatActivity {
@@ -93,7 +83,6 @@ public class EditCourseActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i("Results", "Updated Course");
                     Toast.makeText(EditCourseActivity.this, "Updated Course", Toast.LENGTH_SHORT).show();
                     EditCourseActivity.this.finish();
                 }

@@ -62,7 +62,6 @@ public class TaskViewActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-        //TaskController.queryForTasks(username,dateSent);
         mTasks = TaskController.filterTasksByDate(dateSent, username);
         mAdapter.setItems(mTasks);
         mAdapter.notifyDataSetChanged();

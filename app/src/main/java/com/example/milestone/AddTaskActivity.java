@@ -2,12 +2,8 @@ package com.example.milestone;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,24 +11,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.amazonaws.amplify.generated.graphql.CreateCourseMutation;
-import com.amazonaws.amplify.generated.graphql.CreateTaskMutation;
 import com.amazonaws.amplify.generated.graphql.ListCoursesQuery;
-import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
-import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
 import com.apollographql.apollo.GraphQLCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
 import javax.annotation.Nonnull;
-
-import type.CreateTaskInput;
 import type.ModelCourseFilterInput;
 import type.ModelStringFilterInput;
 
@@ -79,66 +65,9 @@ public class AddTaskActivity extends AppCompatActivity {
             public void run() {
                 Toast.makeText(AddTaskActivity.this, "Added task: " + taskTitle, Toast.LENGTH_SHORT).show();
                 AddTaskActivity.this.finish();
-                Log.i("Results", "Added Task");
             }
         });
     }
-    /*
-    REMOVED WHILE TESTING TASKCONTROLLER
-    public void runMutation(){
-        final String id = UUID.randomUUID().toString();
-        final String courseName = taskCourseSpinner.getSelectedItem().toString();
-        final String taskTitle = ((EditText) findViewById(R.id.tasktitlebox)).getText().toString();
-        final String dueDate = getDueDate();
-        final String priority = prioritySpinner.getSelectedItem().toString();
-        final double percentage = Double.valueOf(getPercentage());
-        final String comments = ((EditText) findViewById(R.id.taskcommentbox)).getText().toString();
-        final boolean completed = false;
-        CreateTaskInput createTaskInput = CreateTaskInput.builder().
-                id(id).
-                author(UserDataController.getUsername()).
-                coursename(courseName).
-                title(taskTitle).
-                duedate(dueDate).
-                priority(priority).
-                percentage(percentage).
-                comments(comments).
-                completed(completed).
-                taskCourseId(getCourseID()).build();
-
-        CreateTaskMutation addTaskMutation = CreateTaskMutation.builder()
-                .input(createTaskInput)
-                .build();
-
-        ClientFactory.appSyncClient().mutate(addTaskMutation).enqueue(mutationCallback);
-    }
-
-    private GraphQLCall.Callback<CreateTaskMutation.Data> mutationCallback = new GraphQLCall.Callback<CreateTaskMutation.Data>() {
-        @Override
-        public void onResponse(@Nonnull final Response<CreateTaskMutation.Data> response) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(AddTaskActivity.this, "Added task", Toast.LENGTH_SHORT).show();
-                    AddTaskActivity.this.finish();
-                    Log.i("Results", "Added Task");
-                }
-            });
-        }
-
-        @Override
-        public void onFailure(@Nonnull final ApolloException e) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.e("", "Failed to perform AddTaskMutation", e);
-                    Toast.makeText(AddTaskActivity.this, "Failed to add Task", Toast.LENGTH_SHORT).show();
-                    AddTaskActivity.this.finish();
-                }
-            });
-        }
-    };
-    */
     public String getCourseID(){
         String cNameSelected = taskCourseSpinner.getSelectedItem().toString();
         int courseIndex = taskCourseSpinner.getSelectedItemPosition();
@@ -202,15 +131,11 @@ public class AddTaskActivity extends AppCompatActivity {
         @Override
         public void onResponse(@Nonnull Response<ListCoursesQuery.Data> response) {
             mCourses = new ArrayList<>(response.data().listCourses().items());
-
             runOnUiThread(new Runnable(){
                 public void run(){
                     setCourses(mCourses);
                 }
             });
-
-
-            Log.i(TAG, "Retrieved Courses: " + mCourses.toString() + mCourses.size());
         }
 
         @Override

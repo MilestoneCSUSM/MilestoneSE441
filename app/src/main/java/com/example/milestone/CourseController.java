@@ -36,7 +36,6 @@ public class CourseController {
     }
 
     public static void queryForCourseById(String cid){
-        Log.i(TAG, "COURSE ID FROM INSIDE COURSE CONTROLLER::::::::::::" + cid);
         ClientFactory.appSyncClient().query(GetCourseQuery.builder().id(cid).build())
                 .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK).enqueue(queryCallback);
     }
@@ -50,9 +49,6 @@ public class CourseController {
         @Override
         public void onResponse(@Nonnull Response<GetCourseQuery.Data> response) {
             usersCourses = new ArrayList<>(response.data().getCourse().tasks().items());
-            Log.i(TAG, "TASKS FROM INSIDE USERCourse CONTROLLER:::::::::::" + usersCourses.toString());
-            //filterTasks();
-
     }
 
         @Override

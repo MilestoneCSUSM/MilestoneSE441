@@ -50,7 +50,6 @@ public class CourseMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_menu);
         query();
-        //addItemsToSpinner();
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
@@ -93,13 +92,11 @@ public class CourseMenuActivity extends AppCompatActivity {
 
     public String getCourseID(){
         int spinnerindex = courseSpinner.getSelectedItemPosition();
-        Log.i(TAG, "COURSE ID: " + mcData.get(spinnerindex).id().toString());
         return mcData.get(spinnerindex).id().toString();
     }
 
     public String getCourseName(){
         int spinnerindex = courseSpinner.getSelectedItemPosition();
-        Log.i(TAG, "COURSE Name: " + mcData.get(spinnerindex).coursename().toString());
         return mcData.get(spinnerindex).coursename();
     }
 
@@ -121,10 +118,6 @@ public class CourseMenuActivity extends AppCompatActivity {
 
 
     public void getTasks(){
-        Log.i(TAG, "COURSE Name GetTasks: " + cname);
-        //ModelStringFilterInput msfi = ModelStringFilterInput.builder().eq(cname).build();
-        //ModelTaskFilterInput mtfi = ModelTaskFilterInput.builder().coursename(msfi).build();
-
         ClientFactory.appSyncClient().query(ListTasksQuery.builder().build())
                 .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
                 .enqueue(taskIdCallback);
@@ -133,7 +126,6 @@ public class CourseMenuActivity extends AppCompatActivity {
     public void cleanUpTasks() {
         for(int i = 0; i< mTasks.size();i++){
             if(cid.equals(mTasks.get(i).course().id())){
-                Log.i(TAG, "COMPARE: from cleansup " + cid + mTasks.get(i).id());
                 DeleteTaskInput dti = DeleteTaskInput.builder().id(mTasks.get(i).id().toString()).build();
                 DeleteTaskMutation dtm = DeleteTaskMutation.builder().input(dti).build();
 
@@ -146,7 +138,6 @@ public class CourseMenuActivity extends AppCompatActivity {
     private GraphQLCall.Callback<DeleteTaskMutation.Data> cleanTasksMutationCallback = new GraphQLCall.Callback<DeleteTaskMutation.Data>() {
         @Override
         public void onResponse(@Nonnull final Response<DeleteTaskMutation.Data> response) {
-            Log.i("Results", "Cleaned up Task");
         }
 
         @Override
@@ -159,7 +150,6 @@ public class CourseMenuActivity extends AppCompatActivity {
         @Override
         public void onResponse(@Nonnull Response<ListTasksQuery.Data> response) {
             mTasks = new ArrayList<>(response.data().listTasks().items());
-            Log.i(TAG, "tasksbydate" + mTasks.toString());
         }
 
         @Override
@@ -175,9 +165,7 @@ public class CourseMenuActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i("Results", "Deleted Course");
                     Toast.makeText(CourseMenuActivity.this, "Deleted Course", Toast.LENGTH_SHORT).show();
-                    //CourseMenuActivity.this.finish();
                 }
             });
         }
@@ -187,9 +175,7 @@ public class CourseMenuActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.e("", "Failed to perform DeleteCourseMutation", e);
                     Toast.makeText(CourseMenuActivity.this, "Failed to delete course", Toast.LENGTH_SHORT).show();
-                    //EditCourseActivity.this.finish();
                 }
             });
         }
@@ -205,9 +191,6 @@ public class CourseMenuActivity extends AppCompatActivity {
                     setCourses(mCourses);
                 }
             });
-
-
-            Log.i(TAG, "Retrieved Courses: " + mCourses.toString() + mCourses.size());
         }
 
         @Override

@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         } catch(NullPointerException e){
             e.printStackTrace();
         }
-        //TaskController.queryForAllTasks();
     }
 
     @Override
@@ -76,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         LocalDateTime ldt = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         currDate = ldt.format(dtf).toString();
-        Log.i(TAG, "Current Date: " + currDate);
         datePicker = (CalendarView) findViewById(R.id.calendar);
 
 
@@ -84,16 +82,13 @@ public class MainActivity extends AppCompatActivity {
             TaskController.queryForAllTasks();
             if(UserDataController.getSubsSize()>0){
                 mTasks = TaskController.filterTasks(UserDataController.getSubbedCourses(),UserDataController.getUsername());
-                Log.i(TAG,"mTasks after filter by CID ------------" +mTasks.toString());
                 mTasks = TaskController.filterTasksByDateGTE(mTasks,currDate);
-                Log.i(TAG,"mTasks after filter by DATE ------------" +mTasks.toString());
                 mAdapter.setItems(mTasks);
                 mAdapter.notifyDataSetChanged();
             }
             else{
                 mTasks = TaskController.filterTasksByUser(UserDataController.getUsername());
                 mTasks = TaskController.filterTasksByDateGTE(mTasks,currDate);
-                Log.i(TAG,"mTasks after filter by DATE ------------" +mTasks.toString());
                 mAdapter.setItems(mTasks);
                 mAdapter.notifyDataSetChanged();
             }
@@ -128,16 +123,13 @@ public class MainActivity extends AppCompatActivity {
                     //TaskController.queryForAllTasks();
                     if(UserDataController.getSubsSize()>0){
                         mTasks = TaskController.filterTasks(UserDataController.getSubbedCourses(),UserDataController.getUsername());
-                        Log.i(TAG,"mTasks after filter by CID ------------" +mTasks.toString());
                         mTasks = TaskController.filterTasksByDateGTE(mTasks,currDate);
-                        Log.i(TAG,"mTasks after filter by DATE ------------" +mTasks.toString());
                         mAdapter.setItems(mTasks);
                         mAdapter.notifyDataSetChanged();
                     }
                     else{
                         mTasks = TaskController.filterTasksByUser(UserDataController.getUsername());
                         mTasks = TaskController.filterTasksByDateGTE(mTasks,currDate);
-                        Log.i(TAG,"mTasks after filter by DATE ------------" +mTasks.toString());
                         mAdapter.setItems(mTasks);
                         mAdapter.notifyDataSetChanged();
                     }
@@ -157,16 +149,13 @@ public class MainActivity extends AppCompatActivity {
                     TaskController.queryForAllTasks();
                     if(UserDataController.getSubsSize()>0){
                         mTasks = TaskController.filterTasks(UserDataController.getSubbedCourses(),UserDataController.getUsername());
-                        Log.i(TAG,"mTasks after filter by CID ------------" +mTasks.toString());
                         mTasks = TaskController.filterTasksByDateGTE(mTasks,currDate);
-                        Log.i(TAG,"mTasks after filter by DATE ------------" +mTasks.toString());
                         mAdapter.setItems(mTasks);
                         mAdapter.notifyDataSetChanged();
                     }
                     else{
                         mTasks = TaskController.filterTasksByUser(UserDataController.getUsername());
                         mTasks = TaskController.filterTasksByDateGTE(mTasks,currDate);
-                        Log.i(TAG,"mTasks after filter by DATE ------------" +mTasks.toString());
                         mAdapter.setItems(mTasks);
                         mAdapter.notifyDataSetChanged();
                     }
@@ -199,17 +188,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.toHome:
                 Intent homeIntent = new Intent(MainActivity.this,MainActivity.class);
                 startActivity(homeIntent);
-                Log.i(TAG, "home clicked");
                 return(true);
             case R.id.courses:
                 Intent courseIntent = new Intent(MainActivity.this,CourseMenuActivity.class);
                 startActivity(courseIntent);
-                Log.i(TAG, "courses clicked");
                 return(true);
             case R.id.tasks:
                 Intent taskIntent = new Intent(MainActivity.this,AddTaskActivity.class);
                 startActivity(taskIntent);
-                Log.i(TAG, "tasks clicked");
                 return(true);
             case R.id.signOut:
                 AWSMobileClient.getInstance().signOut(SignOutOptions.builder().signOutGlobally(true).build(), new Callback<Void>() {
@@ -229,8 +215,6 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.finish();
                     }
                 });
-                //AWSMobileClient.getInstance().signOut();
-                Log.i(TAG, "logout clicked");
                 return(true);
 
     }

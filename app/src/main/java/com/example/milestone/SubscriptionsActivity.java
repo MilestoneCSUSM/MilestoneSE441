@@ -4,40 +4,24 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.service.autofill.UserData;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.amazonaws.amplify.generated.graphql.ListCoursesQuery;
-import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
 import com.amazonaws.amplify.generated.graphql.ListUserDatasQuery;
-import com.amazonaws.amplify.generated.graphql.SearchCoursesQuery;
-import com.amazonaws.amplify.generated.graphql.UpdateTaskMutation;
 import com.amazonaws.amplify.generated.graphql.UpdateUserDataMutation;
-import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
 import com.apollographql.apollo.GraphQLCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
-
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
-
 import type.ModelCourseFilterInput;
 import type.ModelStringFilterInput;
 import type.ModelUserDataFilterInput;
-import type.SearchableCourseFilterInput;
-import type.SearchableStringFilterInput;
 import type.UpdateUserDataInput;
 
 public class SubscriptionsActivity extends AppCompatActivity {
@@ -184,7 +168,6 @@ public class SubscriptionsActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new SubscriptionsAdapter.onItemClickListener() {
             @Override
             public void onSubscribeClick(int position) {
-                Log.i(TAG,"FROM SUBSCRIPTIONSACT :" + position);
                 addSubscription(position);
             }
         });
